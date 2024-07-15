@@ -1,0 +1,6 @@
+@BringMeBackAPI_HostAddress = http://localhost:5157
+
+GET {{BringMeBackAPI_HostAddress}}/
+Accept: application/json
+
+###
