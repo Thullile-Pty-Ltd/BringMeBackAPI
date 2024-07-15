@@ -19,7 +19,12 @@ namespace BringMeBackAPI.Models.Comments
         public DateTime CreatedAt { get; set; }
 
         public int? ParentCommentId { get; set; } // Nullable for replies
+        public Comment ParentComment { get; set; } // Navigation property for parent comment
         public List<Comment> Replies { get; set; }
+
+        [Required]
+        public int ReportId { get; set; }
+        public Report Report { get; set; }
     }
 
 }

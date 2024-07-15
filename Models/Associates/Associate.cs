@@ -11,9 +11,13 @@ namespace BringMeBackAPI.Models.Associates
         public int ReportId { get; set; }
         public Report Report { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
-        [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
-        public string Name { get; set; }
+        // Link to other types of reports if needed (e.g., ItemReport)
+        public int OtherReportId { get; set; }
+        public Report OtherReport { get; set; }
+
+        [Required(ErrorMessage = "Description is required.")]
+        [MaxLength(100, ErrorMessage = "Description cannot exceed 100 characters.")]
+        public string Description { get; set; }
 
         [Required(ErrorMessage = "Relationship is required.")]
         [MaxLength(50, ErrorMessage = "Relationship cannot exceed 50 characters.")]
