@@ -32,8 +32,14 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "BringMeBack API", Version = "v1" });
 });
 
-// Register services
+// User services
 builder.Services.AddScoped<IUserservice, UserService>();
+builder.Services.AddScoped<IOrganizationUserService, OrganizationUserService>();
+builder.Services.AddScoped<ICommunityMemberService, CommunityMemberService>();
+builder.Services.AddScoped<IFamilyMemberService, FamilyMemberService>();
+builder.Services.AddScoped<IPublicAuthorityService, PublicAuthorityService>();
+builder.Services.AddScoped<IVolunteerService, VolunteerService>();
+builder.Services.AddScoped<IDonorSupporterService, DonorSupporterService>();
 
 //Report Services
 builder.Services.AddScoped<IReportService, ReportService>();

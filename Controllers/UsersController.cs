@@ -46,7 +46,7 @@ namespace BringMeBack.Controllers
         /// <returns>A list of users.</returns>
         /// <response code="200">Returns the list of users.</response>
         /// <response code="500">If there was an internal server error.</response>
-        [HttpGet(Name = "GetUsers")]
+        [HttpGet("All", Name = "GetUsers")]
         [ProducesResponseType(typeof(IEnumerable<User>), 200)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -111,16 +111,16 @@ namespace BringMeBack.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        ///     POST /api/CreateUser
+        ///     POST /api/User
         /// </remarks>
         /// <param name="user">The user to create</param>
         /// <returns>The created user.</returns>
         /// <response code="201">Returns the newly created user.</response>
         /// <response code="400">If the user is null or invalid.</response>
-        [HttpPost(Name = "CreateUser")]
+        [HttpPost("Create", Name = "CreateUser")]
         [ProducesResponseType(typeof(User), 201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<User>> CreateUser([FromBody] User user)
+        public async Task<ActionResult<User>> CreateUser(User user)
         {
             if (user == null)
             {

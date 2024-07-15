@@ -61,7 +61,6 @@ namespace BringMeBackAPI.Models.Reports
 
         [MaxLength(200, ErrorMessage = "Observed mental health status cannot exceed 200 characters.")]
         public string ObservedMentalHealthStatus { get; set; }
-
-        //
+        
     }
 }

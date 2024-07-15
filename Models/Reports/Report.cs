@@ -29,6 +29,5 @@ namespace BringMeBackAPI.Models.Reports
         public List<Associate> Associates { get; set; }
 
         public List<Comment> Comments { get; set; }
-    }
-
+    }      
 }
