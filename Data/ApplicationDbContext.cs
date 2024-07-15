@@ -87,6 +87,37 @@ namespace BringMeBack.Data
             modelBuilder.Entity<FoundItemReport>()
                 .ToTable("FoundItemReport");
 
+            // Configure the relationships
+            modelBuilder.Entity<Associate>()
+                .HasOne(a => a.Report)
+                .WithMany(r => r.Associates)
+                .HasForeignKey(a => a.ReportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Associate>()
+                .HasOne(a => a.Report)
+                .WithMany(pr => pr.Associates)
+                .HasForeignKey(a => a.ReportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.ParentComment)
+                .WithMany(pc => pc.Replies)
+                .HasForeignKey(c => c.ParentCommentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Report)
+                .WithMany(r => r.Comments)
+                .HasForeignKey(c => c.ReportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             //Seed Data For Users
             modelBuilder.Entity<CommunityMember>().HasData(
                 new CommunityMember
@@ -397,7 +428,7 @@ namespace BringMeBack.Data
         new PersonReport
         {
             ReportId = 7,
-            UserId = 7, // Assign this to another existing user Id
+            UserId = 1, // Assign this to another existing user Id
             ReportType = "FoundPerson",
             Description = "Emma Lee, found near Johannesburg.",
             CreatedAt = DateTime.UtcNow,
@@ -431,7 +462,7 @@ namespace BringMeBack.Data
         new PersonReport
         {
             ReportId = 8,
-            UserId = 8, // Assign this to another existing user Id
+            UserId = 2, // Assign this to another existing user Id
             ReportType = "MissingPerson",
             Description = "Michael Grey, missing since yesterday.",
             CreatedAt = DateTime.UtcNow,
@@ -465,7 +496,7 @@ namespace BringMeBack.Data
         new PersonReport
         {
             ReportId = 9,
-            UserId = 9, // Assign this to another existing user Id
+            UserId = 3, // Assign this to another existing user Id
             ReportType = "FoundPerson",
             Description = "Sophia Clark, found near Port Elizabeth.",
             CreatedAt = DateTime.UtcNow,
@@ -499,7 +530,7 @@ namespace BringMeBack.Data
         new PersonReport
         {
             ReportId = 10,
-            UserId = 10, // Assign this to another existing user Id
+            UserId = 4, // Assign this to another existing user Id
             ReportType = "MissingPerson",
             Description = "Robert Taylor, missing since last month.",
             CreatedAt = DateTime.UtcNow,
@@ -655,12 +686,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 11,
-          UserId = 11, // Assign this to an existing user Id
+          UserId = 6, // Assign this to an existing user Id
           ReportType = "FoundPerson",
           Description = "Found a lost child near the park.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "Sophia Brown",
+          Nickname = "Johnny",
           Gender = "Female",
           EstimatedAge = 8,
           Nationality = "South African",
@@ -680,12 +712,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 12,
-          UserId = 12, // Assign this to another existing user Id
+          UserId = 5, // Assign this to another existing user Id
           ReportType = "FoundPerson",
           Description = "Found an elderly person wandering near the hospital.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "John Smith",
+          Nickname = "Johnny",
           Gender = "Male",
           EstimatedAge = 70,
           Nationality = "South African",
@@ -705,12 +738,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 13,
-          UserId = 13, // Assign this to another existing user Id
+          UserId = 4, // Assign this to another existing user Id
           ReportType = "FoundPerson",
           Description = "Found a lost teenager near the mall.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "Emily Johnson",
+          Nickname = "Johnny",
           Gender = "Female",
           EstimatedAge = 16,
           Nationality = "South African",
@@ -730,12 +764,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 14,
-          UserId = 14, // Assign this to another existing user Id
+          UserId = 2, // Assign this to another existing user Id
           ReportType = "FoundPerson",
           Description = "Found a missing elderly woman near her home.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "Margaret White",
+          Nickname = "Johnny",
           Gender = "Female",
           EstimatedAge = 75,
           Nationality = "South African",
@@ -755,12 +790,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 15,
-          UserId = 15, // Assign this to another existing user Id
+          UserId = 1, // Assign this to another existing user Id
           ReportType = "FoundPerson",
           Description = "Found a missing young adult near the university.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "David Lee",
+          Nickname = "Johnny",
           Gender = "Male",
           EstimatedAge = 20,
           Nationality = "South African",
@@ -780,12 +816,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 16,
-          UserId = 16, // Assign this to another existing user Id
+          UserId = 2, // Assign this to another existing user Id
           ReportType = "FoundPerson",
           Description = "Found a missing child near the sports stadium.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "Sophie Taylor",
+          Nickname = "Johnny",
           Gender = "Female",
           EstimatedAge = 5,
           Nationality = "South African",
@@ -805,12 +842,13 @@ namespace BringMeBack.Data
       new FoundPersonReport
       {
           ReportId = 17,
-          UserId = 17, // Assign this to another existing user Id
+          UserId = 3, // Assign this to another existing user Id
           ReportType = "FoundPerson",
           Description = "Found a missing elderly man near the retirement village.",
           CreatedAt = DateTime.UtcNow,
           IsResolved = true,
           FullName = "George Brown",
+          Nickname = "Johnny",
           Gender = "Male",
           EstimatedAge = 80,
           Nationality = "South African",
@@ -897,6 +935,156 @@ namespace BringMeBack.Data
            VideoUrl = "https://example.com/foundwallet.mp4"
        }
    );
+
+            ///////////ASSOCIATES///////
+            ///
+            modelBuilder.Entity<Associate>().HasData(
+        // Link Associate to an existing PersonReport (ReportId = 1)
+        new Associate
+        {
+            AssociateId = 1,
+            ReportId = 1, // Linking to John Doe's report
+            OtherReportId = 2, // Linking to an existing ItemReport, for example
+            Description = "Jane Doe",
+            Relationship = "Spouse"
+        },
+        new Associate
+        {
+            AssociateId = 2,
+            ReportId = 1, // Linking to John Doe's report
+            OtherReportId = 3, // Linking to another existing report
+            Description = "Tom Smith",
+            Relationship = "Friend"
+        },
+        new Associate
+        {
+            AssociateId = 3,
+            ReportId = 1, // Linking to John Doe's report
+            OtherReportId = 4, // No link to other report
+            Description = "Mary Johnson",
+            Relationship = "Colleague"
+        },
+        // You can create more associates as needed, linking them to existing reports
+        new Associate
+        {
+            AssociateId = 4,
+            ReportId = 3, // New report will be created later
+            OtherReportId = 1, // Linking to an existing PersonReport
+            Description = "Alex Brown",
+            Relationship = "Cousin"
+        },
+        new Associate
+        {
+            AssociateId = 5,
+            ReportId = 2, // New report will be created later
+            OtherReportId = 2, // Linking to an existing ItemReport
+            Description = "Laura Green",
+            Relationship = "Sister"
+        }
+    );
+
+            /////////COMMENTS////////
+            modelBuilder.Entity<Comment>().HasData(
+      new Comment
+      {
+          CommentId = 1,
+          UserId = 2, // Assign this to an existing user Id
+          Content = "Hope John is found soon.",
+          CreatedAt = DateTime.UtcNow,
+          ReportId = 1
+      },
+      new Comment
+      {
+          CommentId = 2,
+          UserId = 3, // Assign this to another existing user Id
+          Content = "Please contact me if there's any update.",
+          CreatedAt = DateTime.UtcNow.AddDays(-1),
+          ReportId = 1,
+          ParentCommentId = 1 // Reply to CommentId = 1
+      },
+      new Comment
+      {
+          CommentId = 3,
+          UserId = 4, // Assign this to another existing user Id
+          Content = "Praying for his safe return.",
+          CreatedAt = DateTime.UtcNow.AddDays(-2),
+          ReportId = 1
+      },
+      // Replies
+      new Comment
+      {
+          CommentId = 4,
+          UserId = 1, // Assign this to another existing user Id
+          Content = "Thank you!",
+          CreatedAt = DateTime.UtcNow,
+          ReportId = 1,
+          ParentCommentId = 3 // Reply to CommentId = 3
+      },
+      new Comment
+      {
+          CommentId = 5,
+          UserId = 2, // Assign this to another existing user Id
+          Content = "Keeping an eye out in the area.",
+          CreatedAt = DateTime.UtcNow.AddDays(-1),
+          ReportId = 1,
+          ParentCommentId = 3 // Reply to CommentId = 3
+      },
+      new Comment
+      {
+          CommentId = 6,
+          UserId = 3, // Assign this to another existing user Id
+          Content = "Shared on social media.",
+          CreatedAt = DateTime.UtcNow.AddDays(-2),
+          ReportId = 1,
+          ParentCommentId = 3 // Reply to CommentId = 3
+      }
+  // Add more Comment and Reply seed data as needed
+  );
+        
+        ////////NOTIFICATION////////
+            modelBuilder.Entity<Notification>().HasData(
+                new Notification
+                {
+                    NotificationId = 1,
+                    UserId = 1, // Assign this to an existing user Id
+                    Message = "New comment on your missing person report.",
+                    IsRead = false,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Notification
+                {
+                    NotificationId = 2,
+                    UserId = 2, // Assign this to another existing user Id
+                    Message = "Reply to your comment on a missing person report.",
+                    IsRead = false,
+                    CreatedAt = DateTime.UtcNow.AddDays(-1)
+                },
+                new Notification
+                {
+                    NotificationId = 3,
+                    UserId = 3, // Assign this to another existing user Id
+                    Message = "New associate added to a missing person report.",
+                    IsRead = false,
+                    CreatedAt = DateTime.UtcNow.AddDays(-2)
+                },
+                new Notification
+                {
+                    NotificationId = 4,
+                    UserId = 4, // Assign this to another existing user Id
+                    Message = "New comment on a missing person report you are following.",
+                    IsRead = false,
+                    CreatedAt = DateTime.UtcNow.AddDays(-3)
+                },
+                new Notification
+                {
+                    NotificationId = 5,
+                    UserId = 5, // Assign this to another existing user Id
+                    Message = "New comment on a missing person report you commented on.",
+                    IsRead = false,
+                    CreatedAt = DateTime.UtcNow.AddDays(-4)
+                }
+            // Add more Notification seed data as needed
+            );
         }
     }
 }
