@@ -46,7 +46,7 @@ namespace BringMeBack.Controllers
         /// <returns>A list of users.</returns>
         /// <response code="200">Returns the list of users.</response>
         /// <response code="500">If there was an internal server error.</response>
-        [HttpGet("All", Name = "GetUsers")]
+        [HttpGet("AllUser", Name = "GetUsers")]
         [ProducesResponseType(typeof(IEnumerable<User>), 200)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -117,10 +117,10 @@ namespace BringMeBack.Controllers
         /// <returns>The created user.</returns>
         /// <response code="201">Returns the newly created user.</response>
         /// <response code="400">If the user is null or invalid.</response>
-        [HttpPost("Create", Name = "CreateUser")]
+        [HttpPost("NewUser", Name = "CreateUser")]
         [ProducesResponseType(typeof(User), 201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser([FromBody] User user)
         {
             if (user == null)
             {
@@ -242,7 +242,7 @@ namespace BringMeBack.Controllers
         /// <returns>No content.</returns>
         /// <response code="204">If the user is successfully updated.</response>
         /// <response code="404">If the user is not found.</response>
-        [HttpPut("{id}", Name = "PutUser")]
+        [HttpPut("UpdateUser/{id}", Name = "PutUser")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> PutUser(int id, [FromBody] User user)
@@ -266,7 +266,7 @@ namespace BringMeBack.Controllers
         /// <returns>No content.</returns>
         /// <response code="204">If the user is successfully deleted.</response>
         /// <response code="404">If the user is not found.</response>
-        [HttpDelete("{id}", Name = "DeleteUser")]
+        [HttpDelete("DeleteUser/{id}", Name = "DeleteUser")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteUser(int id)
