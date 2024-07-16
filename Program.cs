@@ -12,6 +12,8 @@ using BringMeBackAPI.Services.Notifications.Interfaces;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Globalization;
 using System.Text.Json.Serialization;
+using BringMeBackAPI.Services.Reports.Dashboards;
+using BringMeBackAPI.Repositories.Reports.Dashboards;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(CultureInfo.InvariantCulture);
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
 });
 
 // Add services to the container.
@@ -49,6 +61,13 @@ builder.Services.AddScoped<IDonorSupporterService, DonorSupporterService>();
 //Report Services
 builder.Services.AddScoped<IReportService, ReportService>();
 
+//Missing Pesron Dashboard Report Services
+builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportService>();
+
+// Register your repository
+builder.Services.AddScoped<IMissingPersonReportRepository, MissingPersonReportRepository>();
+
+
 builder.Services.AddScoped<ICommentService, CommentService>();
 //builder.Services.AddScoped<IDonationService, DonationService>();
 builder.Services.AddScoped<IAssociateService, AssociateService>();
@@ -60,7 +79,7 @@ var app = builder.Build();
 
 // Configure the HTTP / Local request pipeline.
 if (app.Environment.IsDevelopment())
-{
+{app.UseDeveloperExceptionPage();
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
@@ -72,6 +91,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(); // Applies CORS policies globally
 
 app.UseAuthorization();
 

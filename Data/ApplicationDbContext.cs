@@ -5,6 +5,7 @@ using BringMeBackAPI.Models.Notifications;
 using BringMeBackAPI.Models.Verification;
 using BringMeBackAPI.Models.Associates;
 using BringMeBackAPI.Models.Comments;
+using BringMeBackAPI.Models.Reports.Dashboard;
 
 namespace BringMeBack.Data
 {
@@ -33,10 +34,13 @@ namespace BringMeBack.Data
 
         //Reports
         public DbSet<Report> Reports { get; set; }
-        public DbSet<PersonReport> PersonReports { get; set; }
-        public DbSet<ItemReport> ItemReports { get; set; }
+        public DbSet<MissingPersonReport> MissingPersonReports { get; set; }
+        public DbSet<MissingItemReport> MissingItemReports { get; set; }
         public DbSet<FoundPersonReport> FoundPersonReports { get; set; }
         public DbSet<FoundItemReport> FoundItemReports { get; set; }
+
+        //Dashboard
+        public DbSet<MissingPersonReportFilterParams> MissingPersonReportFilterParamss { get; set; }
 
         //Associates
         public DbSet<Associate> Associates { get; set; }
@@ -47,6 +51,9 @@ namespace BringMeBack.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Configure keyless entity types
+            modelBuilder.Entity<MissingPersonReportFilterParams>().HasNoKey();
 
             //Specify Database tables:
             // Users
@@ -75,11 +82,11 @@ namespace BringMeBack.Data
             modelBuilder.Entity<Report>()
                 .ToTable("Reports");
 
-            modelBuilder.Entity<ItemReport>()
-                .ToTable("ItemReports");
+            modelBuilder.Entity<MissingItemReport>()
+                .ToTable("MissingItemReports");
 
-            modelBuilder.Entity<PersonReport>()
-                .ToTable("PersonReports");
+            modelBuilder.Entity<MissingPersonReport>()
+                .ToTable("MissingPersonReports");
 
             modelBuilder.Entity<FoundPersonReport>()
                 .ToTable("FoundPersonReports");
@@ -220,8 +227,8 @@ namespace BringMeBack.Data
             );
 
     ////////MISSING PERSON SEEDING//////////
-            modelBuilder.Entity<PersonReport>().HasData(
-        new PersonReport
+            modelBuilder.Entity<MissingPersonReport>().HasData(
+        new MissingPersonReport
         {
             ReportId = 1,
             UserId = 1, // Assign this to an existing user Id
@@ -255,7 +262,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Last seen near a local park.",
             VideoUrl = "https://example.com/video.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 2,
             UserId = 2, // Assign this to another existing user Id
@@ -289,7 +296,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Last seen near the waterfront area.",
             VideoUrl = "https://example.com/missingjane.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 3,
             UserId = 3, // Assign this to another existing user Id
@@ -323,7 +330,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Found near the local mall.",
             VideoUrl = "https://example.com/foundmary.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 4,
             UserId = 4, // Assign this to another existing user Id
@@ -357,7 +364,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Last seen in the downtown area.",
             VideoUrl = "https://example.com/missingdavid.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 5,
             UserId = 5, // Assign this to another existing user Id
@@ -391,7 +398,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Last seen near the park area.",
             VideoUrl = "https://example.com/missingalice.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 6,
             UserId = 6, // Assign this to another existing user Id
@@ -425,7 +432,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Last seen near the shopping center.",
             VideoUrl = "https://example.com/missingpeter.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 7,
             UserId = 1, // Assign this to another existing user Id
@@ -459,7 +466,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Found near the city center.",
             VideoUrl = "https://example.com/foundemma.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 8,
             UserId = 2, // Assign this to another existing user Id
@@ -493,7 +500,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Last seen near the beach area.",
             VideoUrl = "https://example.com/missingmichael.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 9,
             UserId = 3, // Assign this to another existing user Id
@@ -527,7 +534,7 @@ namespace BringMeBack.Data
             BriefDescriptionOfCircumstances = "Found near the shopping mall.",
             VideoUrl = "https://example.com/foundsophia.mp4"
         },
-        new PersonReport
+        new MissingPersonReport
         {
             ReportId = 10,
             UserId = 4, // Assign this to another existing user Id
@@ -564,8 +571,8 @@ namespace BringMeBack.Data
         );
 
             ////////MISSING ITEM SEEDING//////////
-            modelBuilder.Entity<ItemReport>().HasData(
-        new ItemReport
+            modelBuilder.Entity<MissingItemReport>().HasData(
+        new MissingItemReport
         {
             ReportId = 18,
             UserId = 1, // Assign this to an existing user Id
@@ -583,12 +590,12 @@ namespace BringMeBack.Data
             OwnerName = "John Doe",
             OwnerPhoneNumber = "+27817654321",
             OwnerEmailAddress = "john.doe@example.com",
-            PhotoOfItem = "https://example.com/laptopbag.jpg",
+            
             EstimatedValue = 500.00m,
             RewardOffered = 100.00m,
             VideoUrl = "https://example.com/lostlaptop.mp4"
         },
-        new ItemReport
+        new MissingItemReport
         {
             ReportId =19,
             UserId = 2, // Assign this to another existing user Id
@@ -606,12 +613,12 @@ namespace BringMeBack.Data
             OwnerName = "Jane Smith",
             OwnerPhoneNumber = "+27780123456",
             OwnerEmailAddress = "jane.smith@example.com",
-            PhotoOfItem = "https://example.com/smartphone.jpg",
+            
             EstimatedValue = 300.00m,
             RewardOffered = 50.00m,
             VideoUrl = "https://example.com/lostphone.mp4"
         },
-        new ItemReport
+        new MissingItemReport
         {
             ReportId = 20,
             UserId = 3, // Assign this to another existing user Id
@@ -629,12 +636,12 @@ namespace BringMeBack.Data
             OwnerName = "Tom Johnson",
             OwnerPhoneNumber = "+27654321098",
             OwnerEmailAddress = "tom.johnson@example.com",
-            PhotoOfItem = "https://example.com/camera.jpg",
+            
             EstimatedValue = 800.00m,
             RewardOffered = null, // No reward offered for found item
             VideoUrl = "https://example.com/foundcamera.mp4"
         },
-        new ItemReport
+        new MissingItemReport
         {
             ReportId = 21,
             UserId = 4, // Assign this to another existing user Id
@@ -652,12 +659,12 @@ namespace BringMeBack.Data
             OwnerName = "Emily Brown",
             OwnerPhoneNumber = "+27123456789",
             OwnerEmailAddress = "emily.brown@example.com",
-            PhotoOfItem = "https://example.com/wristwatch.jpg",
+            
             EstimatedValue = 400.00m,
             RewardOffered = 50.00m,
             VideoUrl = "https://example.com/lostwatch.mp4"
         },
-        new ItemReport
+        new MissingItemReport
         {
             ReportId = 22,
             UserId = 5, // Assign this to another existing user Id
@@ -675,7 +682,7 @@ namespace BringMeBack.Data
             OwnerName = "Robert White",
             OwnerPhoneNumber = "+27876543210",
             OwnerEmailAddress = "robert.white@example.com",
-            PhotoOfItem = "https://example.com/bicycle.jpg",
+            
             EstimatedValue = 600.00m,
             RewardOffered = 100.00m,
             VideoUrl = "https://example.com/lostbike.mp4"
@@ -886,7 +893,7 @@ namespace BringMeBack.Data
            ReportingPersonName = "Mark Johnson",
            ReportingPersonPhoneNumber = "+27817654321",
            ReportingPersonEmailAddress = "mark.johnson@example.com",
-           PhotoOfItem = "https://example.com/foundlaptopbag.jpg",
+           
            CircumstancesOfFinding = "Found on a seat in the departure lounge.",
            VideoUrl = "https://example.com/foundlaptopbag.mp4"
        },
@@ -908,7 +915,7 @@ namespace BringMeBack.Data
            ReportingPersonName = "Anna Smith",
            ReportingPersonPhoneNumber = "+27780123456",
            ReportingPersonEmailAddress = "anna.smith@example.com",
-           PhotoOfItem = "https://example.com/foundsmartphone.jpg",
+           
            CircumstancesOfFinding = "Found lying on the sidewalk.",
            VideoUrl = "https://example.com/foundsmartphone.mp4"
        },
@@ -930,7 +937,7 @@ namespace BringMeBack.Data
            ReportingPersonName = "Sophie Brown",
            ReportingPersonPhoneNumber = "+27654321098",
            ReportingPersonEmailAddress = "sophie.brown@example.com",
-           PhotoOfItem = "https://example.com/foundwallet.jpg",
+           
            CircumstancesOfFinding = "Found near the bench by the lake.",
            VideoUrl = "https://example.com/foundwallet.mp4"
        }
@@ -939,12 +946,12 @@ namespace BringMeBack.Data
             ///////////ASSOCIATES///////
             ///
             modelBuilder.Entity<Associate>().HasData(
-        // Link Associate to an existing PersonReport (ReportId = 1)
+        // Link Associate to an existing MissingPersonReport (ReportId = 1)
         new Associate
         {
             AssociateId = 1,
             ReportId = 1, // Linking to John Doe's report
-            OtherReportId = 2, // Linking to an existing ItemReport, for example
+            OtherReportId = 2, // Linking to an existing MissingItemReport, for example
             Description = "Jane Doe",
             Relationship = "Spouse"
         },
@@ -969,7 +976,7 @@ namespace BringMeBack.Data
         {
             AssociateId = 4,
             ReportId = 3, // New report will be created later
-            OtherReportId = 1, // Linking to an existing PersonReport
+            OtherReportId = 1, // Linking to an existing MissingPersonReport
             Description = "Alex Brown",
             Relationship = "Cousin"
         },
@@ -977,7 +984,7 @@ namespace BringMeBack.Data
         {
             AssociateId = 5,
             ReportId = 2, // New report will be created later
-            OtherReportId = 2, // Linking to an existing ItemReport
+            OtherReportId = 2, // Linking to an existing MissingItemReport
             Description = "Laura Green",
             Relationship = "Sister"
         }

@@ -2,7 +2,7 @@
 
 namespace BringMeBackAPI.Models.Reports
 {
-    public class PersonReport : Report
+    public class MissingPersonReport : Report
     {
         // Personal Information
         [Required(ErrorMessage = "Full name is required.")]
@@ -80,7 +80,7 @@ namespace BringMeBackAPI.Models.Reports
         // Additional Information
         public string SocialMediaAccounts { get; set; }
 
-        public List<string> RecentPhotos { get; set; }
+        public List<string>? RecentPhotos { get; set; }
 
         [MaxLength(500, ErrorMessage = "Brief description of circumstances cannot exceed 500 characters.")]
         public string BriefDescriptionOfCircumstances { get; set; }

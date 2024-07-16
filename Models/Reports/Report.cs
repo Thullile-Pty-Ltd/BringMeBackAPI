@@ -26,8 +26,8 @@ namespace BringMeBackAPI.Models.Reports
         [Required]
         public bool IsResolved { get; set; }
 
-        public List<Associate> Associates { get; set; }
+        public List<Associate>? Associates { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public List<Comment>? Comments { get; set; }
     }      
 }

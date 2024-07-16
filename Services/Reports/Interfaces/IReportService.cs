@@ -12,12 +12,13 @@ namespace BringMeBackAPI.Services.Reports.Interfaces
         Task<Report> UpdateReportAsync(Report report);
         Task<bool> DeleteReportAsync(int reportId);
 
-        Task<IEnumerable<PersonReport>> GetAllPersonReportsAsync();
-        Task<IEnumerable<ItemReport>> GetAllItemReportsAsync();
+        Task<IEnumerable<MissingPersonReport>> GetAllPersonReportsAsync();
+        Task<IEnumerable<MissingItemReport>> GetAllItemReportsAsync();
         Task<IEnumerable<FoundPersonReport>> GetAllFoundPersonReportsAsync();
         Task<IEnumerable<FoundItemReport>> GetAllFoundItemReportsAsync();
 
         //Task<bool> AddReportToUserTrackingAsync(int userId, int reportId);
+
     }
 
     public interface IAssociateService

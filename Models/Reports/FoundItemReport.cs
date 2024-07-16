@@ -40,13 +40,13 @@ namespace BringMeBackAPI.Models.Reports
         public string ReportingPersonEmailAddress { get; set; }
 
         // Additional Information
-        public string PhotoOfItem { get; set; }
+        public List<string>? RecentPhotos { get; set; }
 
         [MaxLength(500, ErrorMessage = "Circumstances of finding cannot exceed 500 characters.")]
         public string CircumstancesOfFinding { get; set; }
 
         [Url(ErrorMessage = "Invalid URL format.")]
-        public string VideoUrl { get; set; } // Added VideoUrl property
+        public string? VideoUrl { get; set; } // Added VideoUrl property
     }
 
 }

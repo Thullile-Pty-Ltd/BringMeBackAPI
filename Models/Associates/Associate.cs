@@ -11,7 +11,7 @@ namespace BringMeBackAPI.Models.Associates
         public int ReportId { get; set; }
         public Report Report { get; set; }
 
-        // Link to other types of reports if needed (e.g., ItemReport)
+        // Link to other types of reports if needed (e.g., MissingItemReport)
         public int OtherReportId { get; set; }
         public Report OtherReport { get; set; }
 
