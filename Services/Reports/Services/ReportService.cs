@@ -53,14 +53,14 @@ namespace BringMeBackAPI.Services.Reports.Services
             return true;
         }
 
-        public async Task<IEnumerable<PersonReport>> GetAllPersonReportsAsync()
+        public async Task<IEnumerable<MissingPersonReport>> GetAllPersonReportsAsync()
         {
-            return await _context.PersonReports.ToListAsync();
+            return await _context.MissingPersonReports.ToListAsync();
         }
 
-        public async Task<IEnumerable<ItemReport>> GetAllItemReportsAsync()
+        public async Task<IEnumerable<MissingItemReport>> GetAllItemReportsAsync()
         {
-            return await _context.ItemReports.ToListAsync();
+            return await _context.MissingItemReports.ToListAsync();
         }
 
         public async Task<IEnumerable<FoundPersonReport>> GetAllFoundPersonReportsAsync()

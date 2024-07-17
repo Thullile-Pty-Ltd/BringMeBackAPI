@@ -61,6 +61,11 @@ namespace BringMeBackAPI.Models.Reports
 
         [MaxLength(200, ErrorMessage = "Observed mental health status cannot exceed 200 characters.")]
         public string ObservedMentalHealthStatus { get; set; }
-        
+
+        public List<string>? RecentPhotos { get; set; }
+
+        [Url(ErrorMessage = "Invalid URL format.")]
+        public string? VideoUrl { get; set; } // Added VideoUrl property
+
     }
 }

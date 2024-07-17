@@ -2,7 +2,7 @@
 
 namespace BringMeBackAPI.Models.Reports
 {
-    public class ItemReport : Report
+    public class MissingItemReport : Report
     {
         // Item Information
         [Required(ErrorMessage = "Item name is required.")]
@@ -40,7 +40,7 @@ namespace BringMeBackAPI.Models.Reports
         public string OwnerEmailAddress { get; set; }
 
         // Additional Information
-        public string PhotoOfItem { get; set; }
+        public List<string>? RecentPhotos { get; set; }
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Estimated value must be greater than zero.")]
         public decimal? EstimatedValue { get; set; }
