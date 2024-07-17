@@ -13,7 +13,9 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Globalization;
 using System.Text.Json.Serialization;
 using BringMeBackAPI.Services.Reports.Dashboards;
-using BringMeBackAPI.Repositories.Reports.Dashboards;
+using BringMeBackAPI.Repository.Reports.Interfaces;
+using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
+using BringMeBackAPI.Repository.Reports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,12 +63,17 @@ builder.Services.AddScoped<IDonorSupporterService, DonorSupporterService>();
 //Report Services
 builder.Services.AddScoped<IReportService, ReportService>();
 
-//Missing Pesron Dashboard Report Services
-builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportService>();
-
 // Register your repository
 builder.Services.AddScoped<IMissingPersonReportRepository, MissingPersonReportRepository>();
+builder.Services.AddScoped<IFoundPersonReportRepository, FoundPersonReportRepository>();
+builder.Services.AddScoped<IMissingItemReportRepository, MissingItemReportRepository>();
+builder.Services.AddScoped<IFoundItemReportRepository, FoundItemReportRepository>();
 
+// Register services
+builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportService>();
+builder.Services.AddScoped<IMissingItemReportService, MissingItemReportService>();
+builder.Services.AddScoped<IFoundPersonReportService, FoundPersonReportService>();
+builder.Services.AddScoped<IFoundItemReportService, FoundItemReportService>();
 
 builder.Services.AddScoped<ICommentService, CommentService>();
 //builder.Services.AddScoped<IDonationService, DonationService>();

@@ -1,7 +1,7 @@
 ﻿using BringMeBack.Data;
 using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Models.Reports.Dashboard;
-using BringMeBackAPI.Repositories.Reports.Dashboards;
+using BringMeBackAPI.Repository.Reports.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Models.Reports.Dashboard;
 
-namespace BringMeBackAPI.Services.Reports.Dashboards
+namespace BringMeBackAPI.Services.Reports.Dashboards.Interfaces
 {
     public interface IMissingPersonReportService
     {
@@ -10,5 +10,5 @@ namespace BringMeBackAPI.Services.Reports.Dashboards
         Task<IEnumerable<MissingPersonReport>> FilterMissingPersonReportsAsync(MissingPersonReportFilterParams filterParams);
         Task<object> GetMissingPersonReportsStatisticsAsync();
     }
-    
+
 }

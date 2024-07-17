@@ -1,6 +1,7 @@
 ﻿using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Models.Reports.Dashboard;
-using BringMeBackAPI.Repositories.Reports.Dashboards;
+using BringMeBackAPI.Repository.Reports.Interfaces;
+using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
 
 namespace BringMeBackAPI.Services.Reports.Dashboards
 {

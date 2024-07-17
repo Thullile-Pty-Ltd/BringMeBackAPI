@@ -1,6 +1,6 @@
 ﻿using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Models.Reports.Dashboard;
-using BringMeBackAPI.Services.Reports.Dashboards;
+using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BringMeBackAPI.Controllers.Dashboards

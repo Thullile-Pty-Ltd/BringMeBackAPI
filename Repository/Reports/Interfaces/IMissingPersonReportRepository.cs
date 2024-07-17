@@ -3,7 +3,7 @@ using BringMeBackAPI.Models.Reports.Dashboard;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BringMeBackAPI.Repositories.Reports.Dashboards
+namespace BringMeBackAPI.Repository.Reports.Interfaces
 {
     public interface IMissingPersonReportRepository
     {

@@ -41,6 +41,9 @@ namespace BringMeBack.Data
 
         //Dashboard
         public DbSet<MissingPersonReportFilterParams> MissingPersonReportFilterParamss { get; set; }
+        public DbSet<MissingItemReportFilterParams> MissingItemReportFilterParamss { get; set; }
+        public DbSet<FoundPersonReportFilterParams> FoundPersonReportFilterParamss { get; set; }
+        public DbSet<FoundPersonReportFilterParams> FoundItemReportFilterParamss { get; set; }
 
         //Associates
         public DbSet<Associate> Associates { get; set; }
@@ -54,6 +57,9 @@ namespace BringMeBack.Data
 
             // Configure keyless entity types
             modelBuilder.Entity<MissingPersonReportFilterParams>().HasNoKey();
+            modelBuilder.Entity<MissingItemReportFilterParams>().HasNoKey();
+            modelBuilder.Entity<FoundPersonReportFilterParams>().HasNoKey();
+            modelBuilder.Entity<FoundItemReportFilterParams>().HasNoKey();
 
             //Specify Database tables:
             // Users
