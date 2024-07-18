@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using BringMeBackAPI.Services.Users.Interfaces;
 using BringMeBackAPI.Services.Reports.Services;
 using BringMeBackAPI.Services.Reports.Interfaces;
-using BringMeBackAPI.Services.Users.Services;
 using BringMeBackAPI.Services.Verifications.Interfaces;
 using BringMeBackAPI.Services.Verifications.Services;
 using BringMeBackAPI.Services.Notifications.Services;
@@ -16,6 +15,7 @@ using BringMeBackAPI.Services.Reports.Dashboards;
 using BringMeBackAPI.Repository.Reports.Interfaces;
 using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
 using BringMeBackAPI.Repository.Reports;
+using BringMeBackAPI.Repository.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,13 +52,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // User services
-builder.Services.AddScoped<IUserservice, UserService>();
-builder.Services.AddScoped<IOrganizationUserService, OrganizationUserService>();
-builder.Services.AddScoped<ICommunityMemberService, CommunityMemberService>();
-builder.Services.AddScoped<IFamilyMemberService, FamilyMemberService>();
-builder.Services.AddScoped<IPublicAuthorityService, PublicAuthorityService>();
-builder.Services.AddScoped<IVolunteerService, VolunteerService>();
-builder.Services.AddScoped<IDonorSupporterService, DonorSupporterService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 //Report Services
 builder.Services.AddScoped<IReportService, ReportService>();
@@ -69,6 +63,7 @@ builder.Services.AddScoped<IFoundPersonReportRepository, FoundPersonReportReposi
 builder.Services.AddScoped<IMissingItemReportRepository, MissingItemReportRepository>();
 builder.Services.AddScoped<IFoundItemReportRepository, FoundItemReportRepository>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Register services
 builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportService>();
