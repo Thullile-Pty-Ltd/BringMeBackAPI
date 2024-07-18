@@ -68,6 +68,7 @@ builder.Services.AddScoped<IMissingPersonReportRepository, MissingPersonReportRe
 builder.Services.AddScoped<IFoundPersonReportRepository, FoundPersonReportRepository>();
 builder.Services.AddScoped<IMissingItemReportRepository, MissingItemReportRepository>();
 builder.Services.AddScoped<IFoundItemReportRepository, FoundItemReportRepository>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
 
 // Register services
 builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportService>();
@@ -75,9 +76,9 @@ builder.Services.AddScoped<IMissingItemReportService, MissingItemReportService>(
 builder.Services.AddScoped<IFoundPersonReportService, FoundPersonReportService>();
 builder.Services.AddScoped<IFoundItemReportService, FoundItemReportService>();
 
-builder.Services.AddScoped<ICommentService, CommentService>();
+//builder.Services.AddScoped<ICommentService, CommentService>();
 //builder.Services.AddScoped<IDonationService, DonationService>();
-builder.Services.AddScoped<IAssociateService, AssociateService>();
+//builder.Services.AddScoped<IAssociateService, AssociateService>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IOTPService, OTPService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();

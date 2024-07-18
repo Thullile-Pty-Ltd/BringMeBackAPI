@@ -306,7 +306,7 @@ namespace BringMeBack.Data
         {
             ReportId = 3,
             UserId = 3, // Assign this to another existing user Id
-            ReportType = "FoundPerson",
+            ReportType = "MissingPerson",
             Description = "Mary Johnson, found near Durban.",
             CreatedAt = DateTime.UtcNow,
             IsResolved = true,
@@ -442,7 +442,7 @@ namespace BringMeBack.Data
         {
             ReportId = 7,
             UserId = 1, // Assign this to another existing user Id
-            ReportType = "FoundPerson",
+            ReportType = "MissingPerson",
             Description = "Emma Lee, found near Johannesburg.",
             CreatedAt = DateTime.UtcNow,
             IsResolved = true,
@@ -510,7 +510,7 @@ namespace BringMeBack.Data
         {
             ReportId = 9,
             UserId = 3, // Assign this to another existing user Id
-            ReportType = "FoundPerson",
+            ReportType = "MissingPerson",
             Description = "Sophia Clark, found near Port Elizabeth.",
             CreatedAt = DateTime.UtcNow,
             IsResolved = true,
@@ -628,7 +628,7 @@ namespace BringMeBack.Data
         {
             ReportId = 20,
             UserId = 3, // Assign this to another existing user Id
-            ReportType = "FoundItem",
+            ReportType = "LostItem",
             Description = "Found camera near Durban.",
             CreatedAt = DateTime.UtcNow,
             IsResolved = true,
