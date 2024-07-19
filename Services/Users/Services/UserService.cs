@@ -38,15 +38,15 @@ public class UserService : IUserService
 
     public async Task<User> RegisterAsync(User user)
     {
-        // Validate email uniqueness (optional)
+        // Validate email uniqueness
         var existingUser = await _userRepository.GetUserByEmailAsync(user.Email);
         if (existingUser != null)
         {
             throw new Exception("Email address is already registered.");
         }
 
-        // Hash password (recommended for security)
-        user.Password = HashPassword(user.Password); // Implement your hash method
+        // Hash password
+        user.Password = HashPassword(user.Password);
 
         await _userRepository.AddUserAsync(user);
         return user;
@@ -54,15 +54,15 @@ public class UserService : IUserService
 
     public async Task<User> AuthenticateAsync(string email, string password)
     {
-        // Retrieve user by email (assuming email is unique)
+        // Retrieve user by email
         var user = await _userRepository.GetUserByEmailAsync(email);
         if (user == null)
         {
             throw new Exception("User not found.");
         }
 
-        // Validate password (compare hashed passwords)
-        if (!VerifyPassword(user.Password, password)) // Implement your verification method
+        // Verify password
+        if (!VerifyPassword(user.Password, password))
         {
             throw new Exception("Incorrect password.");
         }
@@ -70,16 +70,15 @@ public class UserService : IUserService
         return user;
     }
 
-    // Example hash and verify password methods (replace with your implementation)
     private string HashPassword(string password)
     {
-        // Implement hashing algorithm (e.g., bcrypt)
-        return password; // Placeholder, replace with actual hash
+        // Use bcrypt for hashing
+        return BCrypt.Net.BCrypt.HashPassword(password);
     }
 
     private bool VerifyPassword(string hashedPassword, string password)
     {
-        // Implement password verification logic
-        return hashedPassword == password; // Placeholder, replace with actual verification
+        // Verify password using bcrypt
+        return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
     }
 }
