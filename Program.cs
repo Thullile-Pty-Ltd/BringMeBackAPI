@@ -8,7 +8,7 @@ using BringMeBackAPI.Services.Verifications.Interfaces;
 using BringMeBackAPI.Services.Verifications.Services;
 using BringMeBackAPI.Services.Notifications.Services;
 using BringMeBackAPI.Services.Notifications.Interfaces;
-using Swashbuckle.AspNetCore.SwaggerUI;
+
 using System.Globalization;
 using System.Text.Json.Serialization;
 using BringMeBackAPI.Services.Reports.Dashboards;
@@ -16,6 +16,10 @@ using BringMeBackAPI.Repository.Reports.Interfaces;
 using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
 using BringMeBackAPI.Repository.Reports;
 using BringMeBackAPI.Repository.Users;
+using BringMeBackAPI.Models.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +28,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(CultureInfo.InvariantCulture);
 });
+
+// Add AutoMapper to the service container
+builder.Services.AddAutoMapper(typeof(MappingProfile)); // Register AutoMapper with the profile
 
 builder.Services.AddCors(options =>
 {
@@ -34,6 +41,8 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -78,6 +87,39 @@ builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IOTPService, OTPService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
+
+// JWT settings from appsettings.json
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+if (string.IsNullOrEmpty(jwtSettings["Issuer"]) ||
+    string.IsNullOrEmpty(jwtSettings["Audience"]) ||
+    string.IsNullOrEmpty(jwtSettings["Key"]))
+{
+    throw new InvalidOperationException("JWT configuration values are missing.");
+}
+
+// Add JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+    };
+});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP / Local request pipeline.
@@ -95,8 +137,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
 app.UseCors(); // Applies CORS policies globally
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
