@@ -34,6 +34,24 @@ namespace BringMeBackAPI.Services.Reports.Services
         {
             // Ensure the UserId in the report matches the logged-in user
             report.UserId = userId;
+
+            // Fetch the user details from the database
+            var user = await _userService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            // Populate the flattened user data in the report
+            report.UserId = user.Id;
+            report.UserName = user.Name;
+            report.UserEmail = user.Email;
+            report.UserPhoneNumber = user.PhoneNumber;
+            report.UserLocation = user.Location;
+            report.UserRole = user.Role;
+
+            // Set other report properties as needed
+            report.CreatedAt = DateTime.UtcNow;
             return await _reportRepository.CreateReport(report);
         }
 

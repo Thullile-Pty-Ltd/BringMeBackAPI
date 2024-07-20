@@ -102,15 +102,15 @@ namespace BringMeBackAPI.Controllers
             return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
         }
 
-        public string GenerateJWTToken(User user)
+        private string GenerateJWTToken(User user)
         {
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.Name),
-    };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+            };
 
-            var secretKey = _configuration["Jwt:Key"]; // Update to match your configuration
+            var secretKey = _configuration["Jwt:Key"]; // Ensure this matches your configuration
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -125,6 +125,5 @@ namespace BringMeBackAPI.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
-
     }
 }

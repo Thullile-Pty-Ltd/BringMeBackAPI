@@ -12,7 +12,7 @@ namespace BringMeBackAPI.Models.Users.DTOs
         public string Location { get; set; }
         public string Role { get; set; }
 
-        // Role-specific properties
+        // UserRole-specific properties
         public CommunityMemberDto? CommunityMember { get; set; }
         public DonorSupporterDto? DonorSupporter { get; set; }
         public FamilyMemberDto? FamilyMember { get; set; }

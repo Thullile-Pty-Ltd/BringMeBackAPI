@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BringMeBackAPI.Models.Reports.DTOs;
 using BringMeBackAPI.Models.Users;
 using BringMeBackAPI.Models.Users.DTOs;
 
