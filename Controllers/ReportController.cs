@@ -41,20 +41,12 @@ namespace BringMeBackAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateOrCreateReport([FromBody] Report report)
+        public async Task<IActionResult> CreateReport([FromBody] Report report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
-
-            // Check if the report already exists
-            var existingReport = await _reportService.GetReportById(report.ReportId);
-                       
-                // If report does not exist, create a new report
-                var createdReport = await _reportService.CreateReport(userId, report);
-                return CreatedAtAction(nameof(GetReport), new { id = createdReport.ReportId }, createdReport);
-          
-           
+            var createdReport = await _reportService.CreateReport(userId, report);
+            return CreatedAtAction(nameof(GetReport), new { id = createdReport.ReportId }, createdReport);
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReport(int id, [FromBody] Report report)
