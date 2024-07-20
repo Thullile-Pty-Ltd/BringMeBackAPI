@@ -45,7 +45,7 @@ namespace BringMeBack.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Convert Role from string to UserRole enum
+            // Convert UserRole from string to UserRole enum
             if (!Enum.TryParse<UserRole>(registerDto.Role, out var userRole))
             {
                 return BadRequest("Invalid role.");
@@ -213,6 +213,8 @@ namespace BringMeBack.Controllers
                     Id = user.Id,
                     Name = user.Name,
                     Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Location = user.Location,                    
                     Role = user.Role.ToString(), // or .ToString() based on your requirement
                     Token = token // Add token to DTO
                 };

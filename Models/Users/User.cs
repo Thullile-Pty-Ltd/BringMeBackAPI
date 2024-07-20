@@ -26,7 +26,7 @@ namespace BringMeBackAPI.Models.Users
         [MaxLength(100, ErrorMessage = "Description cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Email address is required.")]
+        [Required(ErrorMessage = "UserEmail address is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
 
@@ -42,10 +42,10 @@ namespace BringMeBackAPI.Models.Users
         [Phone(ErrorMessage = "Invalid phone number.")]
         public string PhoneNumber { get; set; }
 
-        [MaxLength(200, ErrorMessage = "Location cannot exceed 200 characters.")]
+        [MaxLength(200, ErrorMessage = "UserLocation cannot exceed 200 characters.")]
         public string Location { get; set; }
 
-        [Required(ErrorMessage = "Role is required.")]
+        [Required(ErrorMessage = "UserRole is required.")]
         public UserRole Role { get; set; }
 
         public List<Report>? Reports { get; set; }

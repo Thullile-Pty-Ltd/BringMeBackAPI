@@ -26,7 +26,7 @@ namespace BringMeBackAPI.Services.Verifications.Services
             _context.Verifications.Add(verification);
             await _context.SaveChangesAsync();
 
-            // Send the verification code via Email
+            // Send the verification code via UserEmail
             var user = await _context.Users.FindAsync(userId);
             if (user != null)
             {
@@ -61,7 +61,7 @@ namespace BringMeBackAPI.Services.Verifications.Services
 
         private void SendVerificationEmail(string email, string code)
         {
-            // Integration with Email service goes here
+            // Integration with UserEmail service goes here
             Console.WriteLine($"Sending Verification Code {code} to email {email}");
         }
     }

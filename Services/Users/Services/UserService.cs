@@ -42,7 +42,7 @@ public class UserService : IUserService
         var existingUser = await _userRepository.GetUserByEmailAsync(user.Email);
         if (existingUser != null)
         {
-            throw new Exception("Email address is already registered.");
+            throw new Exception("UserEmail address is already registered.");
         }
 
         // Hash password

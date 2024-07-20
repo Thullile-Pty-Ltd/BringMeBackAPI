@@ -41,12 +41,20 @@ namespace BringMeBackAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReport([FromBody] Report report)
+        public async Task<IActionResult> UpdateOrCreateReport([FromBody] Report report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
-            var createdReport = await _reportService.CreateReport(userId, report);
-            return CreatedAtAction(nameof(GetReport), new { id = createdReport.ReportId }, createdReport);
+
+            // Check if the report already exists
+            var existingReport = await _reportService.GetReportById(report.ReportId);
+                       
+                // If report does not exist, create a new report
+                var createdReport = await _reportService.CreateReport(userId, report);
+                return CreatedAtAction(nameof(GetReport), new { id = createdReport.ReportId }, createdReport);
+          
+           
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReport(int id, [FromBody] Report report)
@@ -102,15 +110,15 @@ namespace BringMeBackAPI.Controllers
             return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
         }
 
-        public string GenerateJWTToken(User user)
+        private string GenerateJWTToken(User user)
         {
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.Name),
-    };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+            };
 
-            var secretKey = _configuration["Jwt:Key"]; // Update to match your configuration
+            var secretKey = _configuration["Jwt:Key"]; // Ensure this matches your configuration
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -125,6 +133,5 @@ namespace BringMeBackAPI.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
-
     }
 }
