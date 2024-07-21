@@ -15,16 +15,53 @@ namespace BringMeBackAPI.Repository.Reports
             _context = context;
         }
 
+        /// <summary>
+        ///             CREATE
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        public async Task<MissingItemReport> CreateMissingItemReport(MissingItemReport report)
+        {
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+
+        /// <summary>
+        ///             EDIT / UPDATE
+        /// </summary>
+        /// <returns></returns>
+        public async Task<MissingItemReport> UpdateMissingItemReport(MissingItemReport report)
+        {
+            _context.Reports.Update(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+
+        /// <summary>
+        ///             GET ALL
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<MissingItemReport>> GetAllMissingItemReportsAsync()
         {
             return await _context.MissingItemReports.ToListAsync();
         }
 
+        /// <summary>
+        ///             GET BY ID
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
         public async Task<MissingItemReport> GetMissingItemReportByIdAsync(int reportId)
         {
             return await _context.MissingItemReports.FindAsync(reportId);
         }
 
+        /// <summary>
+        ///             FILTERS
+        /// </summary>
+        /// <param name="filterParams"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<MissingItemReport>> FilterMissingItemReportsAsync(MissingItemReportFilterParams filterParams)
         {
             var query = _context.MissingItemReports.AsQueryable();
@@ -52,6 +89,10 @@ namespace BringMeBackAPI.Repository.Reports
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        ///             STATISTICS
+        /// </summary>
+        /// <returns></returns>
         public async Task<object> GetMissingItemReportsStatisticsAsync()
         {
             // Implement logic for statistics

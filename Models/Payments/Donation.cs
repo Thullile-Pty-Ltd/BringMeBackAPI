@@ -22,6 +22,7 @@ namespace BringMeBackAPI.Models.Payments
         [Required(ErrorMessage = "Donation type is required.")]
         [MaxLength(50, ErrorMessage = "Donation type cannot exceed 50 characters.")]
         public string DonationType { get; set; } // e.g., Food, Clothing, Shelter
+        public bool IsArchived { get; set; }
     }
 
 

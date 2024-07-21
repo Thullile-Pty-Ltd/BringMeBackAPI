@@ -45,7 +45,7 @@ namespace BringMeBack.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Convert UserRole from string to UserRole enum
+            // Convert Role from string to UserRole enum
             if (!Enum.TryParse<UserRole>(registerDto.Role, out var userRole))
             {
                 return BadRequest("Invalid role.");
@@ -273,6 +273,7 @@ namespace BringMeBack.Controllers
         }
 
         [HttpPost]
+        [Route("CreateUser")]
         public async Task<IActionResult> AddUser([FromBody] User user)
         {
             if (!ModelState.IsValid)

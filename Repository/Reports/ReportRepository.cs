@@ -43,6 +43,25 @@ namespace BringMeBackAPI.Repository.Reports
             await _context.SaveChangesAsync();
             return report;
         }
+       
+        public async Task<FoundPersonReport> CreateFoundPersonReport(FoundPersonReport report)
+        {
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+        public async Task<MissingItemReport> CreateMissingItemReport(MissingItemReport report)
+        {
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+        public async Task<FoundItemReport> CreateFoundItemReport(FoundItemReport report)
+        {
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
 
         public async Task<Report> UpdateReport(Report report)
         {
@@ -61,6 +80,16 @@ namespace BringMeBackAPI.Repository.Reports
 
             report.IsArchived = true;
             _context.Reports.Update(report);
+
+            if (report.Comments != null)
+            {
+                foreach (var comment in report.Comments)
+                {
+                    comment.IsArchived = true;
+                    _context.Comments.Update(comment);
+                }
+            }           
+
             await _context.SaveChangesAsync();
             return true;
         }

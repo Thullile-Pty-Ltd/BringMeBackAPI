@@ -15,16 +15,55 @@ namespace BringMeBackAPI.Repository.Reports
             _context = context;
         }
 
+        /// <summary>
+        ///             CREATE
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        public async Task<FoundItemReport> CreateFoundItemReport(FoundItemReport report)
+        {
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+
+        /// <summary>
+        ///             EDIT / UPDATE
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        public async Task<FoundItemReport> UpdateFoundItemReport(FoundItemReport report)
+        {
+            _context.Reports.Update(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+
+        /// <summary>
+        ///             GET ALL
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<FoundItemReport>> GetAllFoundItemReportsAsync()
         {
             return await _context.FoundItemReports.ToListAsync();
         }
 
+
+        /// <summary>
+        ///             GET BY ID
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
         public async Task<FoundItemReport> GetFoundItemReportByIdAsync(int reportId)
         {
             return await _context.FoundItemReports.FindAsync(reportId);
         }
 
+        /// <summary>
+        ///             FILTERS
+        /// </summary>
+        /// <param name="filterParams"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<FoundItemReport>> FilterFoundItemReportsAsync(FoundItemReportFilterParams filterParams)
         {
             var query = _context.FoundItemReports.AsQueryable();
@@ -52,6 +91,10 @@ namespace BringMeBackAPI.Repository.Reports
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        ///             STATISTICS
+        /// </summary>
+        /// <returns></returns>
         public async Task<object> GetFoundItemReportsStatisticsAsync()
         {
             // Implement logic for statistics

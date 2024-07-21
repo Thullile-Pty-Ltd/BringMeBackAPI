@@ -22,6 +22,7 @@ namespace BringMeBackAPI.Models.Associates
         [Required(ErrorMessage = "Relationship is required.")]
         [MaxLength(50, ErrorMessage = "Relationship cannot exceed 50 characters.")]
         public string Relationship { get; set; }
+        public bool IsArchived { get; set; }
     }
 
 
