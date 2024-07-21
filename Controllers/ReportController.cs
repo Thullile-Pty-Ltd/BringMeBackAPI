@@ -77,7 +77,7 @@ namespace BringMeBackAPI.Controllers
         /// </summary>
         /// <param name="report"></param>
         /// <returns></returns>
-        [HttpPost("person/missing")]        
+        [HttpPost("CreateMissingPersonReport")]        
         public async Task<IActionResult> CreateMissingPersonReport([FromBody] MissingPersonReport report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
@@ -90,7 +90,7 @@ namespace BringMeBackAPI.Controllers
         /// </summary>
         /// <param name="report"></param>
         /// <returns></returns>
-        [HttpPost("item/missing")]
+        [HttpPost("CreateMissingItemReport")]
         public async Task<IActionResult> CreateMissingItemReport([FromBody] MissingItemReport report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
@@ -103,7 +103,7 @@ namespace BringMeBackAPI.Controllers
         /// </summary>
         /// <param name="report"></param>
         /// <returns></returns>
-        [HttpPost("person/found")]
+        [HttpPost("CreateFoundPersonReport")]
         public async Task<IActionResult> CreateFoundPersonReport([FromBody] FoundPersonReport report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
@@ -116,7 +116,7 @@ namespace BringMeBackAPI.Controllers
         /// </summary>
         /// <param name="report"></param>
         /// <returns></returns>
-        [HttpPost("item/found")]
+        [HttpPost("CreateFoundItemReport")]
         public async Task<IActionResult> CreateFoundItemReport([FromBody] FoundItemReport report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
