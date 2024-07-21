@@ -17,6 +17,7 @@ namespace BringMeBackAPI.Controllers.Dashboards
         }
 
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<FoundPersonReport>>> GetAllFoundPersonReportsAsync()
         {
             var reports = await _foundPersonReportService.GetAllFoundPersonReportsAsync();

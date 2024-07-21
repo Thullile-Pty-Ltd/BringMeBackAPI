@@ -19,6 +19,7 @@ namespace BringMeBackAPI.Models.Notifications
 
         [Required]
         public DateTime CreatedAt { get; set; }
+        public bool IsArchived { get; set; }
     }
 
 }

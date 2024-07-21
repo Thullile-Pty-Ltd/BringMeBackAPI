@@ -42,10 +42,10 @@ namespace BringMeBackAPI.Models.Users
         [Phone(ErrorMessage = "Invalid phone number.")]
         public string PhoneNumber { get; set; }
 
-        [MaxLength(200, ErrorMessage = "UserLocation cannot exceed 200 characters.")]
+        [MaxLength(200, ErrorMessage = "Location cannot exceed 200 characters.")]
         public string Location { get; set; }
 
-        [Required(ErrorMessage = "UserRole is required.")]
+        [Required(ErrorMessage = "Role is required.")]
         public UserRole Role { get; set; }
 
         public List<Report>? Reports { get; set; }

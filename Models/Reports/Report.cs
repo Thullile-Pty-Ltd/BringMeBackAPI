@@ -16,9 +16,9 @@ namespace BringMeBackAPI.Models.Reports
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
-        public string UserPhoneNumber { get; set; }
-        public string UserLocation { get; set; }
-        public UserRole UserRole { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Location { get; set; }
+        public UserRole Role { get; set; }
        
 
         [Required(ErrorMessage = "Report type is required.")]

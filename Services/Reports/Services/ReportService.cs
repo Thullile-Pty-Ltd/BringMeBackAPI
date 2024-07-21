@@ -46,9 +46,9 @@ namespace BringMeBackAPI.Services.Reports.Services
             report.UserId = user.Id;
             report.UserName = user.Name;
             report.UserEmail = user.Email;
-            report.UserPhoneNumber = user.PhoneNumber;
-            report.UserLocation = user.Location;
-            report.UserRole = user.Role;
+            report.PhoneNumber = user.PhoneNumber;
+            report.Location = user.Location;
+            report.Role = user.Role;
 
             // Set other report properties as needed
             report.CreatedAt = DateTime.UtcNow;

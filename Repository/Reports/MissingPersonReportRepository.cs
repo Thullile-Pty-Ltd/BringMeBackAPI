@@ -17,17 +17,55 @@ namespace BringMeBackAPI.Services.Reports.Dashboards
         {
             _context = context;
         }
+        /// <summary>
+        ///             CREATE 
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        public async Task<MissingPersonReport> CreateMissingPersonReport(MissingPersonReport report)
+        {
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
 
-        public async Task<IEnumerable<MissingPersonReport>> GetAllMissingPersonReportsAsync()
+        /// <summary>
+        ///             EDIT / UPDATE
+        /// </summary>
+        /// <returns></returns>
+        ///    
+       public async Task<MissingPersonReport> UpdateMissingPersonReport(MissingPersonReport report)
+        {
+            _context.Reports.Update(report);
+            await _context.SaveChangesAsync();
+            return report;
+        }
+
+        /// <summary>
+        ///             GET ALL
+        /// </summary>
+        /// <returns></returns>
+    public async Task<IEnumerable<MissingPersonReport>> GetAllMissingPersonReportsAsync()
         {
             return await _context.MissingPersonReports.ToListAsync();
         }
 
+        /// <summary>
+        ///             GET BY ID
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
         public async Task<MissingPersonReport> GetMissingPersonReportByIdAsync(int reportId)
         {
             return await _context.MissingPersonReports.FindAsync(reportId);
         }
 
+
+        /// <summary>
+        ///             FILTERS
+        /// </summary>
+        /// <param name="filterParams"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<MissingPersonReport>> FilterMissingPersonReportsAsync(MissingPersonReportFilterParams filterParams)
         {
             var query = _context.MissingPersonReports.AsQueryable();
@@ -57,6 +95,11 @@ namespace BringMeBackAPI.Services.Reports.Dashboards
             return await query.ToListAsync();
         }
 
+
+        /// <summary>
+        ///             STATISTICS
+        /// </summary>
+        /// <returns></returns>
         public async Task<object> GetMissingPersonReportsStatisticsAsync()
         {
             var totalReports = await _context.MissingPersonReports.CountAsync();
