@@ -20,6 +20,7 @@ using BringMeBackAPI.Models.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BringMeBackAPI.Services.FileUpload;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("http://localhost:3000")
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -88,6 +89,9 @@ builder.Services.AddScoped<IOTPService, OTPService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
 
+// File Upload
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
+
 // JWT settings from appsettings.json
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
@@ -137,7 +141,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.UseStaticFiles(); // Ensure this line is present to serve static files
 app.UseCors(); // Applies CORS policies globally
 
 app.UseAuthentication();

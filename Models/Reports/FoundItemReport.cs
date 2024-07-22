@@ -40,7 +40,7 @@ namespace BringMeBackAPI.Models.Reports
         public string ReportingPersonEmailAddress { get; set; }
 
         // Additional Information
-        public List<string>? RecentPhotos { get; set; }
+        public List<string>? RecentPhotos { get; set; } // For file uploads
 
         [MaxLength(500, ErrorMessage = "Circumstances of finding cannot exceed 500 characters.")]
         public string CircumstancesOfFinding { get; set; }

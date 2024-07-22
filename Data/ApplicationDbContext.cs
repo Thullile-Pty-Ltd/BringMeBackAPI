@@ -6,7 +6,6 @@ using BringMeBackAPI.Models.Verification;
 using BringMeBackAPI.Models.Associates;
 using BringMeBackAPI.Models.Comments;
 using BringMeBackAPI.Models.Reports.Dashboard;
-using BringMeBackAPI.Models.Reports.DTOs;
 
 namespace BringMeBack.Data
 {

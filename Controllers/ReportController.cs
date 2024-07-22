@@ -1,18 +1,13 @@
-﻿using BringMeBackAPI.Models.Associates;
-using BringMeBackAPI.Models.Comments;
-using BringMeBackAPI.Models.Reports;
+﻿using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Services.Reports.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using BringMeBackAPI.Models.Users;
 using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
-using BringMeBackAPI.Services.Reports.Dashboards;
 
 namespace BringMeBackAPI.Controllers
 {
