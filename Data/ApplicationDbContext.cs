@@ -39,12 +39,6 @@ namespace BringMeBack.Data
         public DbSet<FoundPersonReport> FoundPersonReports { get; set; }
         public DbSet<FoundItemReport> FoundItemReports { get; set; }
 
-        //Dashboard
-        public DbSet<MissingPersonReportFilterParams> MissingPersonReportFilterParamss { get; set; }
-        public DbSet<MissingItemReportFilterParams> MissingItemReportFilterParamss { get; set; }
-        public DbSet<FoundPersonReportFilterParams> FoundPersonReportFilterParamss { get; set; }
-        public DbSet<FoundPersonReportFilterParams> FoundItemReportFilterParamss { get; set; }
-
         //Associates
         public DbSet<Associate> Associates { get; set; }
 

@@ -8,6 +8,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using BringMeBackAPI.Models.Users;
 using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
+using BringMeBackAPI.Services.Reports.Services;
 
 namespace BringMeBackAPI.Controllers
 {
@@ -22,12 +23,14 @@ namespace BringMeBackAPI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IFoundPersonReportService _foundPersonReportService;
         private readonly IFoundItemReportService _foundItemReportService;
+        private readonly IReportMatchingService _reportMatchingService;
+
 
         public ReportsController(IReportService reportService, IConfiguration configuration, 
             IMissingPersonReportService missingPersonReportService, 
             IMissingItemReportService missingItemReportService, 
             IFoundPersonReportService foundPersonReportService,
-            IFoundItemReportService foundItemReportService)
+            IFoundItemReportService foundItemReportService, IReportMatchingService reportMatchingService)
         {
             _reportService = reportService;
             _configuration = configuration;
@@ -35,6 +38,7 @@ namespace BringMeBackAPI.Controllers
             _missingItemReportService = missingItemReportService;
             _foundPersonReportService = foundPersonReportService;
             _foundItemReportService = foundItemReportService;
+            _reportMatchingService = reportMatchingService;
         }
 
         /// <summary>
@@ -117,6 +121,94 @@ namespace BringMeBackAPI.Controllers
             var userId = GetUserIdFromClaims(); // Extract userId from claims
             var createdReport = await _foundItemReportService.CreateFoundItemReport(userId, report);
             return CreatedAtAction(nameof(GetReport), new { id = createdReport.ReportId }, createdReport);
+        }
+
+        /// <summary>
+        ///             CAMPARE MISSING PERSON
+        /// </summary>
+        /// <param name="newReport"></param>
+        /// <returns></returns>
+        [HttpPost("compare-missing-person-report")]
+        public async Task<IActionResult> CompareMissingPersonReport([FromBody] MissingPersonReport newReport)
+        {
+
+            // Ensure that the new report can be compared with both missing and found person reports
+            var (isMatch, matchedReport, matchPercentage) = await _reportMatchingService.FindMissingPersonMatchingReportAsync(newReport);
+
+            if (isMatch)
+            {
+                // Return success response with match details
+                return Ok(new { match = true, matchPercentage, matchedReport });
+            }
+
+            // Return response indicating no match found
+            return Ok(new { match = false, matchPercentage });
+        }
+
+        /// <summary>
+        ///             CAMPARE FOUND PERSON
+        /// </summary>
+        /// <param name="newReport"></param>
+        /// <returns></returns>
+        [HttpPost("compare-found-person-report")]
+        public async Task<IActionResult> CompareFoundPersonReport([FromBody] FoundPersonReport newReport)
+        {
+
+            // Ensure that the new report can be compared with both missing and found person reports
+            var (isMatch, matchedReport, matchPercentage) = await _reportMatchingService.FindFoundPersonMatchingReportAsync(newReport);
+
+            if (isMatch)
+            {
+                // Return success response with match details
+                return Ok(new { match = true, matchPercentage, matchedReport });
+            }
+
+            // Return response indicating no match found
+            return Ok(new { match = false, matchPercentage });
+        }
+
+        /// <summary>
+        ///             CAMPARE MISSING ITEM
+        /// </summary>
+        /// <param name="newReport"></param>
+        /// <returns></returns>
+        [HttpPost("compare-missing-item-report")]
+        public async Task<IActionResult> CompareMissingItemReport([FromBody] MissingItemReport newReport)
+        {
+
+            // Ensure that the new report can be compared with both missing and found person reports
+            var (isMatch, matchedReport, matchPercentage) = await _reportMatchingService.FindMissingItemMatchingReportAsync(newReport);
+
+            if (isMatch)
+            {
+                // Return success response with match details
+                return Ok(new { match = true, matchPercentage, matchedReport });
+            }
+
+            // Return response indicating no match found
+            return Ok(new { match = false, matchPercentage });
+        }
+
+        /// <summary>
+        ///             CAMPARE FOUND ITEM
+        /// </summary>
+        /// <param name="newReport"></param>
+        /// <returns></returns>
+        [HttpPost("compare-found-item-report")]
+        public async Task<IActionResult> CompareFoundItemReport([FromBody] FoundItemReport newReport)
+        {
+
+            // Ensure that the new report can be compared with both missing and found person reports
+            var (isMatch, matchedReport, matchPercentage) = await _reportMatchingService.FindFoundItemMatchingReportAsync(newReport);
+
+            if (isMatch)
+            {
+                // Return success response with match details
+                return Ok(new { match = true, matchPercentage, matchedReport });
+            }
+
+            // Return response indicating no match found
+            return Ok(new { match = false, matchPercentage });
         }
 
         /// <summary>
@@ -311,5 +403,6 @@ namespace BringMeBackAPI.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
+
     }
 }

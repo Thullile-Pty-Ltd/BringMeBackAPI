@@ -80,6 +80,7 @@ builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportServi
 builder.Services.AddScoped<IMissingItemReportService, MissingItemReportService>();
 builder.Services.AddScoped<IFoundPersonReportService, FoundPersonReportService>();
 builder.Services.AddScoped<IFoundItemReportService, FoundItemReportService>();
+builder.Services.AddScoped<IReportMatchingService, ReportMatchingService>();
 
 //builder.Services.AddScoped<ICommentService, CommentService>();
 //builder.Services.AddScoped<IDonationService, DonationService>();
