@@ -80,13 +80,13 @@ namespace BringMeBackAPI.Models.Reports
         // Additional Information
         public string SocialMediaAccounts { get; set; }
 
-        public List<string>? RecentPhotos { get; set; }
+        public List<string>? RecentPhotos { get; set; } // For file uploads
 
         [MaxLength(500, ErrorMessage = "Brief description of circumstances cannot exceed 500 characters.")]
         public string BriefDescriptionOfCircumstances { get; set; }
 
         [Url(ErrorMessage = "Invalid URL format.")]
-        public string VideoUrl { get; set; } // Added VideoUrl property
+        public string? VideoUrl { get; set; } // Added VideoUrl property
     }
 
 }

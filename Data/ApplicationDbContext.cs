@@ -6,7 +6,6 @@ using BringMeBackAPI.Models.Verification;
 using BringMeBackAPI.Models.Associates;
 using BringMeBackAPI.Models.Comments;
 using BringMeBackAPI.Models.Reports.Dashboard;
-using BringMeBackAPI.Models.Reports.DTOs;
 
 namespace BringMeBack.Data
 {
@@ -39,12 +38,6 @@ namespace BringMeBack.Data
         public DbSet<MissingItemReport> MissingItemReports { get; set; }
         public DbSet<FoundPersonReport> FoundPersonReports { get; set; }
         public DbSet<FoundItemReport> FoundItemReports { get; set; }
-
-        //Dashboard
-        public DbSet<MissingPersonReportFilterParams> MissingPersonReportFilterParamss { get; set; }
-        public DbSet<MissingItemReportFilterParams> MissingItemReportFilterParamss { get; set; }
-        public DbSet<FoundPersonReportFilterParams> FoundPersonReportFilterParamss { get; set; }
-        public DbSet<FoundPersonReportFilterParams> FoundItemReportFilterParamss { get; set; }
 
         //Associates
         public DbSet<Associate> Associates { get; set; }

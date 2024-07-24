@@ -40,7 +40,7 @@ namespace BringMeBackAPI.Models.Reports
         public string OwnerEmailAddress { get; set; }
 
         // Additional Information
-        public List<string>? RecentPhotos { get; set; }
+        public List<string>? RecentPhotos { get; set; } // For file uploads
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Estimated value must be greater than zero.")]
         public decimal? EstimatedValue { get; set; }

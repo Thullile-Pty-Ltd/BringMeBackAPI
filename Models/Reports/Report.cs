@@ -1,6 +1,5 @@
 ﻿using BringMeBackAPI.Models.Associates;
 using BringMeBackAPI.Models.Comments;
-using BringMeBackAPI.Models.Reports.DTOs;
 using BringMeBackAPI.Models.Users;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
