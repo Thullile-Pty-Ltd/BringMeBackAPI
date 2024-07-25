@@ -14,10 +14,15 @@ namespace BringMeBackAPI.Services.Reports.Interfaces
         Task<bool> ArchiveReport(int userId, int id); // Only the owner can archive
 
         // Comment related methods
-        Task<List<Comment>> GetCommentsByReportId(int reportId);
-        Task<Comment> AddComment(int userId, int reportId, Comment comment);
-        Task<Comment> GetCommentById(int commentId);
-        Task<bool> DeleteComment(int userId, int commentId);
+        Task<List<ParentComment>> GetParentCommentsByReportId(int reportId);
+        Task<ParentComment> AddParentComment(int userId, int reportId, ParentComment comment);
+        Task<ParentComment> GetParentCommentById(int commentId);
+        Task<bool> DeleteParentComment(int userId, int commentId);
+
+        Task<List<ReplyComment>> GetRepliesByParentCommentId(int parentCommentId);
+        Task<ReplyComment> AddReplyComment(int userId, int parentCommentId, ReplyComment reply);
+        Task<ReplyComment> GetReplyCommentById(int commentId);
+        Task<bool> DeleteReplyComment(int userId, int commentId);
     }
 
 }

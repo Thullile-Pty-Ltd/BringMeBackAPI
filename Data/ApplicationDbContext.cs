@@ -43,7 +43,9 @@ namespace BringMeBack.Data
         public DbSet<Associate> Associates { get; set; }
 
         //comments
-         public DbSet<Comment> Comments { get; set; }
+        // New DbSets for comments
+        public DbSet<ParentComment> ParentComments { get; set; }
+        public DbSet<ReplyComment> ReplyComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -106,19 +108,19 @@ namespace BringMeBack.Data
                 .HasForeignKey(a => a.ReportId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure the Report-Comment relationship
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Report)
-                .WithMany(r => r.Comments)
-                .HasForeignKey(c => c.ReportId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete to avoid cycles
+            // Configure the ParentComment entity
+            modelBuilder.Entity<ParentComment>()
+                .HasKey(pc => pc.CommentId);
 
-            // Configure the self-referencing relationship for replies
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.ParentComment)
-                .WithMany(c => c.Replies)
-                .HasForeignKey(c => c.ParentCommentId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete to avoid cycles
+            modelBuilder.Entity<ParentComment>()
+                .HasMany(pc => pc.Replies)
+                .WithOne(r => r.ParentComment)
+                .HasForeignKey(r => r.ParentCommentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure the ReplyComment entity
+            modelBuilder.Entity<ReplyComment>()
+                .HasKey(rc => rc.CommentId);
         }
     }
 }
