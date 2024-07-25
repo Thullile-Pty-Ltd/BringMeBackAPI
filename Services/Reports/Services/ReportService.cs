@@ -6,6 +6,7 @@ using BringMeBackAPI.Repository.Reports.Interfaces;
 using BringMeBackAPI.Services.Reports.Interfaces;
 using BringMeBackAPI.Services.Users.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace BringMeBackAPI.Services.Reports.Services
 {
@@ -93,6 +94,41 @@ namespace BringMeBackAPI.Services.Reports.Services
             }
 
             return await _reportRepository.ArchiveReport(id);
+        }
+
+        public async Task<Comment> AddComment(int userId, int reportId, Comment comment)
+        {
+            var report = await _reportRepository.GetReportById(reportId);
+            if (report == null)
+            {
+                throw new KeyNotFoundException("Report not found.");
+            }
+
+            comment.UserId = userId;
+            comment.CreatedAt = DateTime.UtcNow;
+            comment.ReportId = reportId;
+
+            return await _reportRepository.AddComment(comment);
+        }
+
+        public async Task<List<Comment>> GetCommentsByReportId(int reportId)
+        {
+            return await _reportRepository.GetCommentsByReportId(reportId);
+        }
+        public async Task<Comment> GetCommentById(int commentId)
+        {
+            return await _reportRepository.GetCommentById(commentId);
+        }
+
+        public async Task<bool> DeleteComment(int userId, int commentId)
+        {
+            var comment = await _reportRepository.GetCommentById(commentId);
+            if (comment == null || comment.UserId != userId)
+            {
+                throw new UnauthorizedAccessException("You are not authorized to delete this comment.");
+            }
+
+            return await _reportRepository.DeleteComment(commentId);
         }
     }
 

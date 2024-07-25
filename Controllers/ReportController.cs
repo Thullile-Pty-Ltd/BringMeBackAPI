@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using BringMeBackAPI.Models.Users;
 using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
 using BringMeBackAPI.Services.Reports.Services;
+using BringMeBackAPI.Models.Comments;
 
 namespace BringMeBackAPI.Controllers
 {
@@ -344,6 +345,87 @@ namespace BringMeBackAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        // Comment Endpoints
+        // Get all comments for a specific report
+        [HttpGet("{reportId}/comments")]
+        public async Task<IActionResult> GetCommentsByReportId(int reportId)
+        {
+            try
+            {
+                var comments = await _reportService.GetCommentsByReportId(reportId);
+                if (comments == null || !comments.Any())
+                {
+                    // Return No Content (204) if no comments are found
+                    return NoContent();
+                }
+
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and return a generic error message
+                // LogException(ex); // Uncomment this line if you have a logging mechanism
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+        // Add a new comment to a report
+        [HttpPost("Add/{reportId}/comments")]
+        public async Task<IActionResult> AddComment(int reportId, [FromBody] Comment comment)
+        {
+            try
+            {
+                // Fetch the report from the database
+                var report = await _reportService.GetReportById(reportId);
+                if (report == null)
+                {
+                    return NotFound("Report not found");
+                }
+
+                // Attach the report and other details to the comment
+                comment.Report = report;
+                comment.ReportId = reportId;
+                comment.CreatedAt = DateTime.UtcNow;
+
+                var userId = GetUserIdFromClaims(); // Extract userId from claims
+                comment.UserId = userId;
+
+                var createdComment = await _reportService.AddComment(userId, reportId, comment);
+                // Ensure that the action name in CreatedAtAction matches the actual action method
+                return CreatedAtAction(nameof(GetCommentById), new { commentId = createdComment.CommentId }, createdComment);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and return a generic error message
+                // LogException(ex); // Uncomment this line if you have a logging mechanism
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("replies/{commentId}")]
+        public async Task<IActionResult> GetCommentById(int commentId)
+        {
+            var comment = await _reportService.GetCommentById(commentId);
+            if (comment == null) return NotFound();
+            return Ok(comment);
+        }
+
+        [HttpDelete("comments/{commentId}")]
+        public async Task<IActionResult> DeleteComment(int userId, int commentId)
+        {
+            try
+            {
+                var result = await _reportService.DeleteComment(userId, commentId);
+                if (!result) return NotFound();
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
             }
         }
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BringMeBackAPI.Repository.Reports
 {
+    using BringMeBackAPI.Models.Comments;
     using BringMeBackAPI.Models.Reports;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -73,23 +74,38 @@ namespace BringMeBackAPI.Repository.Reports
         public async Task<bool> ArchiveReport(int id)
         {
             var report = await _context.Reports.FindAsync(id);
-            if (report == null)
-            {
-                return false;
-            }
+            if (report == null) return false;
 
             report.IsArchived = true;
             _context.Reports.Update(report);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<List<Comment>> GetCommentsByReportId(int reportId)
+        {
+            return await _context.Comments
+                .Where(c => c.ReportId == reportId)
+                .ToListAsync();
+        }
 
-            if (report.Comments != null)
-            {
-                foreach (var comment in report.Comments)
-                {
-                    comment.IsArchived = true;
-                    _context.Comments.Update(comment);
-                }
-            }           
+        public async Task<Comment> AddComment(Comment comment)
+        {
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+            return comment;
+        }
 
+        public async Task<Comment> GetCommentById(int commentId)
+        {
+            return await _context.Comments.Include(c => c.Replies).FirstOrDefaultAsync(c => c.CommentId == commentId);
+        }
+
+        public async Task<bool> DeleteComment(int commentId)
+        {
+            var comment = await _context.Comments.FindAsync(commentId);
+            if (comment == null) return false;
+
+            _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
             return true;
         }

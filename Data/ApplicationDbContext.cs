@@ -106,23 +106,19 @@ namespace BringMeBack.Data
                 .HasForeignKey(a => a.ReportId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.ParentComment)
-                .WithMany(pc => pc.Replies)
-                .HasForeignKey(c => c.ParentCommentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+            // Configure the Report-Comment relationship
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Report)
                 .WithMany(r => r.Comments)
                 .HasForeignKey(c => c.ReportId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete to avoid cycles
+
+            // Configure the self-referencing relationship for replies
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.ParentComment)
+                .WithMany(c => c.Replies)
+                .HasForeignKey(c => c.ParentCommentId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete to avoid cycles
         }
     }
 }
