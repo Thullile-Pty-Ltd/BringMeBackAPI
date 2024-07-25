@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BringMeBackAPI.Repository.Reports
 {
+    using BringMeBackAPI.Models.Comments;
     using BringMeBackAPI.Models.Reports;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -73,23 +74,68 @@ namespace BringMeBackAPI.Repository.Reports
         public async Task<bool> ArchiveReport(int id)
         {
             var report = await _context.Reports.FindAsync(id);
-            if (report == null)
-            {
-                return false;
-            }
+            if (report == null) return false;
 
             report.IsArchived = true;
             _context.Reports.Update(report);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        // Comment related methods
+        public async Task<List<ParentComment>> GetParentCommentsByReportId(int reportId)
+        {
+            return await _context.ParentComments
+                .Where(c => c.ReportId == reportId)
+                .ToListAsync();
+        }
 
-            if (report.Comments != null)
-            {
-                foreach (var comment in report.Comments)
-                {
-                    comment.IsArchived = true;
-                    _context.Comments.Update(comment);
-                }
-            }           
+        public async Task<ParentComment> AddParentComment(ParentComment comment)
+        {
+            _context.ParentComments.Add(comment);
+            await _context.SaveChangesAsync();
+            return comment;
+        }
 
+        public async Task<ParentComment> GetParentCommentById(int commentId)
+        {
+            return await _context.ParentComments.FindAsync(commentId);
+        }
+
+        public async Task<bool> DeleteParentComment(int commentId)
+        {
+            var comment = await _context.ParentComments.FindAsync(commentId);
+            if (comment == null) return false;
+
+            _context.ParentComments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<ReplyComment>> GetRepliesByParentCommentId(int parentCommentId)
+        {
+            return await _context.ReplyComments
+                .Where(r => r.ParentCommentId == parentCommentId)
+                .ToListAsync();
+        }
+
+        public async Task<ReplyComment> AddReplyComment(ReplyComment reply)
+        {
+            _context.ReplyComments.Add(reply);
+            await _context.SaveChangesAsync();
+            return reply;
+        }
+
+        public async Task<ReplyComment> GetReplyCommentById(int commentId)
+        {
+            return await _context.ReplyComments.FindAsync(commentId);
+        }
+
+        public async Task<bool> DeleteReplyComment(int commentId)
+        {
+            var reply = await _context.ReplyComments.FindAsync(commentId);
+            if (reply == null) return false;
+
+            _context.ReplyComments.Remove(reply);
             await _context.SaveChangesAsync();
             return true;
         }

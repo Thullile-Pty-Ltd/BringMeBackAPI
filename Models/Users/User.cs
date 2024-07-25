@@ -49,7 +49,7 @@ namespace BringMeBackAPI.Models.Users
         public UserRole Role { get; set; }
 
         public List<Report>? Reports { get; set; }
-        public List<Comment>? Comments { get; set; }
+        public List<ParentComment>? Comments { get; set; }
         public List<Donation>? Donations { get; set; }
     }
 

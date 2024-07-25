@@ -6,6 +6,7 @@ using BringMeBackAPI.Repository.Reports.Interfaces;
 using BringMeBackAPI.Services.Reports.Interfaces;
 using BringMeBackAPI.Services.Users.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace BringMeBackAPI.Services.Reports.Services
 {
@@ -93,6 +94,53 @@ namespace BringMeBackAPI.Services.Reports.Services
             }
 
             return await _reportRepository.ArchiveReport(id);
+        }
+
+        // Comment related methods
+        public async Task<List<ParentComment>> GetParentCommentsByReportId(int reportId)
+        {
+            return await _reportRepository.GetParentCommentsByReportId(reportId);
+        }
+
+        public async Task<ParentComment> AddParentComment(int userId, int reportId, ParentComment comment)
+        {
+            // Additional logic to handle userId and reportId if needed
+            comment.ReportId = reportId; // Ensure the report ID is set
+            return await _reportRepository.AddParentComment(comment);
+        }
+
+        public async Task<ParentComment> GetParentCommentById(int commentId)
+        {
+            return await _reportRepository.GetParentCommentById(commentId);
+        }
+
+        public async Task<bool> DeleteParentComment(int userId, int commentId)
+        {
+            // Additional logic to handle userId if needed
+            return await _reportRepository.DeleteParentComment(commentId);
+        }
+
+        public async Task<List<ReplyComment>> GetRepliesByParentCommentId(int parentCommentId)
+        {
+            return await _reportRepository.GetRepliesByParentCommentId(parentCommentId);
+        }
+
+        public async Task<ReplyComment> AddReplyComment(int userId, int parentCommentId, ReplyComment reply)
+        {
+            // Additional logic to handle userId and parentCommentId if needed
+            reply.ParentCommentId = parentCommentId; // Ensure the parent comment ID is set
+            return await _reportRepository.AddReplyComment(reply);
+        }
+
+        public async Task<ReplyComment> GetReplyCommentById(int commentId)
+        {
+            return await _reportRepository.GetReplyCommentById(commentId);
+        }
+
+        public async Task<bool> DeleteReplyComment(int userId, int commentId)
+        {
+            // Additional logic to handle userId if needed
+            return await _reportRepository.DeleteReplyComment(commentId);
         }
     }
 

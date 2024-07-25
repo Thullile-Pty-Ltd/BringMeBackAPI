@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using BringMeBackAPI.Models.Users;
 using BringMeBackAPI.Services.Reports.Dashboards.Interfaces;
 using BringMeBackAPI.Services.Reports.Services;
+using BringMeBackAPI.Models.Comments;
 
 namespace BringMeBackAPI.Controllers
 {
@@ -346,6 +347,119 @@ namespace BringMeBackAPI.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
+        // Comment Endpoints
+        // Get all comments for a specific report
+
+        [HttpGet("get/{reportId}/parent-comments")]
+        public async Task<IActionResult> GetParentCommentsByReportId(int reportId)
+        {
+            var comments = await _reportService.GetParentCommentsByReportId(reportId);
+            if (comments == null || !comments.Any())
+            {
+                return NoContent();
+            }
+            return Ok(comments);
+        }
+
+        [HttpPost("{reportId}/add/parent-comments")]
+        public async Task<IActionResult> AddParentComment(int reportId, [FromBody] ParentComment comment)
+        {
+            var report = await _reportService.GetReportById(reportId);
+            if (report == null)
+            {
+                return NotFound("Report not found");
+            }
+
+            comment.Report = report;
+            comment.ReportId = reportId;
+            comment.CreatedAt = DateTime.UtcNow;
+            var userId = GetUserIdFromClaims();
+            comment.UserId = userId;
+
+            var createdComment = await _reportService.AddParentComment(userId, reportId, comment);
+            return CreatedAtAction(nameof(GetParentCommentById), new { commentId = createdComment.CommentId }, createdComment);
+        }
+
+        [HttpGet("get/parent-comments/{commentId}")]
+        public async Task<IActionResult> GetParentCommentById(int commentId)
+        {
+            var comment = await _reportService.GetParentCommentById(commentId);
+            if (comment == null) return NotFound();
+            return Ok(comment);
+        }
+
+        [HttpDelete("delete/parent-comments/{commentId}")]
+        public async Task<IActionResult> DeleteParentComment(int commentId)
+        {
+            var userId = GetUserIdFromClaims();
+            try
+            {
+                var result = await _reportService.DeleteParentComment(userId, commentId);
+                if (!result) return NotFound();
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
+
+        [HttpGet("parent-comments/get/{parentCommentId}/replies")]
+        public async Task<IActionResult> GetRepliesByParentCommentId(int parentCommentId)
+        {
+            var replies = await _reportService.GetRepliesByParentCommentId(parentCommentId);
+            if (replies == null || !replies.Any())
+            {
+                return NoContent();
+            }
+            return Ok(replies);
+        }
+
+        [HttpPost("parent-comments/{parentCommentId}/add/replies")]
+        public async Task<IActionResult> AddReplyComment(int parentCommentId, [FromBody] ReplyComment reply)
+        {
+            var parentComment = await _reportService.GetParentCommentById(parentCommentId);
+            if (parentComment == null)
+            {
+                return NotFound("Parent comment not found");
+            }
+           
+
+            reply.ParentComment = parentComment;
+            reply.ParentCommentId = parentCommentId;           
+            reply.CreatedAt = DateTime.UtcNow;
+            var userId = GetUserIdFromClaims();
+            reply.UserId = userId;
+
+            var createdReply = await _reportService.AddReplyComment(userId, parentCommentId, reply);
+            return CreatedAtAction(nameof(GetReplyCommentById), new { commentId = createdReply.CommentId }, createdReply);
+        }
+
+        [HttpGet("get/replies/{commentId}")]
+        public async Task<IActionResult> GetReplyCommentById(int commentId)
+        {
+            var comment = await _reportService.GetReplyCommentById(commentId);
+            if (comment == null) return NotFound();
+            return Ok(comment);
+        }
+
+        [HttpDelete("delete/replies/{commentId}")]
+        public async Task<IActionResult> DeleteReplyComment(int commentId)
+        {
+            var userId = GetUserIdFromClaims();
+            try
+            {
+                var result = await _reportService.DeleteReplyComment(userId, commentId);
+                if (!result) return NotFound();
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
+
 
         /// <summary>
         ///             GENERATE USER TOKEN
