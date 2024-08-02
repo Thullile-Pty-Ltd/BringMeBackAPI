@@ -5,10 +5,10 @@ namespace BringMeBackAPI.Repository.Reports.Interfaces
 {
     public interface IReportRepository
     {
-        Task<IEnumerable<Report>> GetAllReports();
-        Task<Report> GetReportById(int id);
-        Task<Report> CreateReport(Report report);
-        Task<Report> UpdateReport(Report report);
+        Task<IEnumerable<BaseReport>> GetAllReports();
+        Task<BaseReport> GetReportById(int id);
+        Task<BaseReport> CreateReport(BaseReport report);
+        Task<BaseReport> UpdateReport(BaseReport report);
         Task<bool> ArchiveReport(int id);
 
         // Comment related methods

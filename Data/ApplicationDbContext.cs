@@ -3,9 +3,13 @@ using BringMeBackAPI.Models.Users;
 using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Models.Notifications;
 using BringMeBackAPI.Models.Verification;
-using BringMeBackAPI.Models.Associates;
 using BringMeBackAPI.Models.Comments;
 using BringMeBackAPI.Models.Reports.Dashboard;
+using BringMeBackAPI.Models.Reports.Animals;
+using BringMeBackAPI.Models.Reports.Items;
+using BringMeBackAPI.Models.Reports.others;
+using BringMeBackAPI.Models.Reports.Persons;
+using BringMeBackAPI.Models.Reports.Vehicles;
 
 namespace BringMeBack.Data
 {
@@ -33,14 +37,37 @@ namespace BringMeBack.Data
         public DbSet<Notification> Notifications { get; set; }
 
         //Reports
-        public DbSet<Report> Reports { get; set; }
+        public DbSet<BaseReport> Reports { get; set; }
         public DbSet<MissingPersonReport> MissingPersonReports { get; set; }
         public DbSet<MissingItemReport> MissingItemReports { get; set; }
         public DbSet<FoundPersonReport> FoundPersonReports { get; set; }
         public DbSet<FoundItemReport> FoundItemReports { get; set; }
 
-        //Associates
-        public DbSet<Associate> Associates { get; set; }
+
+
+        // New DbSets
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<ClothingAndAccessories> ClothingAndAccessories { get; set; }
+        public DbSet<DangerZone> DangerZones { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Adult> Adults { get; set; }
+        public DbSet<Child> Children { get; set; }
+        public DbSet<SeniorCitizen> SeniorCitizens { get; set; }
+        public DbSet<WantedPerson> WantedPersons { get; set; }
+        public DbSet<Animal> Animals { get; set; }
+        public DbSet<Livestock> Livestocks { get; set; }
+        public DbSet<Pet> Pets { get; set; }
+        public DbSet<Wild> Wilds { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Truck> Trucks { get; set; }
+        public DbSet<HeavyDutyMachinery> HeavyDutyMachineries { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Bike> Bikes { get; set; }
+        public DbSet<Bus> Buses { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<HomeAndOffice> HomeAndOffices { get; set; }
+        public DbSet<Device> Devices { get; set; }      
 
         //comments
         // New DbSets for comments
@@ -80,7 +107,7 @@ namespace BringMeBack.Data
                 .ToTable("Volunteer");
 
             // Configure TPT inheritance strategy
-            modelBuilder.Entity<Report>()
+            modelBuilder.Entity<BaseReport>()
                 .ToTable("Reports");
 
             modelBuilder.Entity<MissingItemReport>()
@@ -93,20 +120,7 @@ namespace BringMeBack.Data
                 .ToTable("FoundPersonReports");
 
             modelBuilder.Entity<FoundItemReport>()
-                .ToTable("FoundItemReport");
-
-            // Configure the relationships
-            modelBuilder.Entity<Associate>()
-                .HasOne(a => a.Report)
-                .WithMany(r => r.Associates)
-                .HasForeignKey(a => a.ReportId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Associate>()
-                .HasOne(a => a.Report)
-                .WithMany(pr => pr.Associates)
-                .HasForeignKey(a => a.ReportId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .ToTable("FoundItemReport");           
 
             // Configure the ParentComment entity
             modelBuilder.Entity<ParentComment>()

@@ -31,7 +31,7 @@ namespace BringMeBackAPI.Services.Reports.Services
             var allMissingReports = await _missingPersonReportRepository.GetAllMissingPersonReportsAsync();
             var allFoundReports = await _foundPersonReportRepository.GetAllFoundPersonReportsAsync();
 
-            var allReports = allMissingReports.Cast<Report>().Concat(allFoundReports.Cast<Report>());
+            var allReports = allMissingReports.Cast<BaseReport>().Concat(allFoundReports.Cast<BaseReport>());
 
             MissingPersonReport? bestMatch = null;
             double highestMatchPercentage = 0;
@@ -65,7 +65,7 @@ namespace BringMeBackAPI.Services.Reports.Services
         /// <param name="newReport"></param>
         /// <param name="existingReport"></param>
         /// <returns></returns>
-        private double CalculateMissingPersonMatchPercentage(MissingPersonReport newReport, Report existingReport)
+        private double CalculateMissingPersonMatchPercentage(MissingPersonReport newReport, BaseReport existingReport)
         {
             // Implement your matching logic here. For simplicity, we assume a basic comparison
             double score = 0;
@@ -109,7 +109,7 @@ namespace BringMeBackAPI.Services.Reports.Services
             var allMissingReports = await _missingPersonReportRepository.GetAllMissingPersonReportsAsync();
             var allFoundReports = await _foundPersonReportRepository.GetAllFoundPersonReportsAsync();
 
-            var allReports = allFoundReports.Cast<Report>().Concat(allMissingReports.Cast<Report>());
+            var allReports = allFoundReports.Cast<BaseReport>().Concat(allMissingReports.Cast<BaseReport>());
 
             FoundPersonReport? bestMatch = null;
             double highestMatchPercentage = 0;
@@ -143,7 +143,7 @@ namespace BringMeBackAPI.Services.Reports.Services
         /// <param name="newReport"></param>
         /// <param name="existingReport"></param>
         /// <returns></returns>
-        private double CalculateFoundPersonMatchPercentage(FoundPersonReport newReport, Report existingReport)
+        private double CalculateFoundPersonMatchPercentage(FoundPersonReport newReport, BaseReport existingReport)
         {
             // Implement your matching logic here. For simplicity, we assume a basic comparison
             double score = 0;
@@ -186,7 +186,7 @@ namespace BringMeBackAPI.Services.Reports.Services
             var allMissingReports = await _missingItemReportRepository.GetAllMissingItemReportsAsync();
             var allFoundReports = await _foundItemReportRepository.GetAllFoundItemReportsAsync();
 
-            var allReports = allFoundReports.Cast<Report>().Concat(allMissingReports.Cast<Report>());
+            var allReports = allFoundReports.Cast<BaseReport>().Concat(allMissingReports.Cast<BaseReport>());
 
             MissingItemReport? bestMatch = null;
             double highestMatchPercentage = 0;
@@ -220,7 +220,7 @@ namespace BringMeBackAPI.Services.Reports.Services
         /// <param name="newReport"></param>
         /// <param name="existingReport"></param>
         /// <returns></returns>
-        private double CalculateItemMatchPercentage(MissingItemReport newReport, Report existingReport)
+        private double CalculateItemMatchPercentage(MissingItemReport newReport, BaseReport existingReport)
         {
             double score = 0;
             int totalPossibleScore = 0;
@@ -263,7 +263,7 @@ namespace BringMeBackAPI.Services.Reports.Services
             var allMissingReports = await _missingItemReportRepository.GetAllMissingItemReportsAsync();
             var allFoundReports = await _foundItemReportRepository.GetAllFoundItemReportsAsync();
 
-            var allReports = allFoundReports.Cast<Report>().Concat(allMissingReports.Cast<Report>());
+            var allReports = allFoundReports.Cast<BaseReport>().Concat(allMissingReports.Cast<BaseReport>());
 
             FoundItemReport? bestMatch = null;
             double highestMatchPercentage = 0;
@@ -297,7 +297,7 @@ namespace BringMeBackAPI.Services.Reports.Services
         /// <param name="newReport"></param>
         /// <param name="existingReport"></param>
         /// <returns></returns>
-        private double CalculateFoundItemMatchPercentage(FoundItemReport newReport, Report existingReport)
+        private double CalculateFoundItemMatchPercentage(FoundItemReport newReport, BaseReport existingReport)
         {
             double score = 0;
             int totalPossibleScore = 0;

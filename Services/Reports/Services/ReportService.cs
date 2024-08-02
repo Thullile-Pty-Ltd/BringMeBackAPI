@@ -1,6 +1,4 @@
-﻿using BringMeBack.Data;
-using BringMeBackAPI.Models.Associates;
-using BringMeBackAPI.Models.Comments;
+﻿using BringMeBackAPI.Models.Comments;
 using BringMeBackAPI.Models.Reports;
 using BringMeBackAPI.Repository.Reports.Interfaces;
 using BringMeBackAPI.Services.Reports.Interfaces;
@@ -21,17 +19,17 @@ namespace BringMeBackAPI.Services.Reports.Services
             _userService = userService;
         }
 
-        public async Task<IEnumerable<Report>> GetAllReports()
+        public async Task<IEnumerable<BaseReport>> GetAllReports()
         {
             return await _reportRepository.GetAllReports();
         }
 
-        public async Task<Report> GetReportById(int id)
+        public async Task<BaseReport> GetReportById(int id)
         {
             return await _reportRepository.GetReportById(id);
         }
 
-        public async Task<Report> CreateReport(int userId, Report report)
+        public async Task<BaseReport> CreateReport(int userId, BaseReport report)
         {
             // Ensure the UserId in the report matches the logged-in user
             report.UserId = userId;
@@ -56,12 +54,12 @@ namespace BringMeBackAPI.Services.Reports.Services
             return await _reportRepository.CreateReport(report);
         }
 
-        public async Task<Report> UpdateReport(int userId, int id, Report report)
+        public async Task<BaseReport> UpdateReport(int userId, int id, BaseReport report)
         {
             var existingReport = await _reportRepository.GetReportById(id);
             if (existingReport == null)
             {
-                throw new Exception("Report not found.");
+                throw new Exception("BaseReport not found.");
             }
 
             // Ensure the logged-in user is the owner of the report
@@ -84,7 +82,7 @@ namespace BringMeBackAPI.Services.Reports.Services
             var existingReport = await _reportRepository.GetReportById(id);
             if (existingReport == null)
             {
-                throw new Exception("Report not found.");
+                throw new Exception("BaseReport not found.");
             }
 
             // Ensure the logged-in user is the owner of the report

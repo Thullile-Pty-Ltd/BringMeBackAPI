@@ -21,24 +21,22 @@ namespace BringMeBackAPI.Repository.Reports
             _context = context;
         }
 
-        public async Task<IEnumerable<Report>> GetAllReports()
+        public async Task<IEnumerable<BaseReport>> GetAllReports()
         {
             // Return all reports. Adjust as needed based on your requirements.
-            return await _context.Reports
-                .Include(r => r.Associates)
+            return await _context.Reports                
                 .Include(r => r.Comments)
                 .ToListAsync();
         }
 
-        public async Task<Report> GetReportById(int id)
+        public async Task<BaseReport> GetReportById(int id)
         {
-            return await _context.Reports
-                .Include(r => r.Associates)
+            return await _context.Reports                
                 .Include(r => r.Comments)
                 .FirstOrDefaultAsync(r => r.ReportId == id);
         }
 
-        public async Task<Report> CreateReport(Report report)
+        public async Task<BaseReport> CreateReport(BaseReport report)
         {
             _context.Reports.Add(report);
             await _context.SaveChangesAsync();
@@ -64,7 +62,7 @@ namespace BringMeBackAPI.Repository.Reports
             return report;
         }
 
-        public async Task<Report> UpdateReport(Report report)
+        public async Task<BaseReport> UpdateReport(BaseReport report)
         {
             _context.Reports.Update(report);
             await _context.SaveChangesAsync();

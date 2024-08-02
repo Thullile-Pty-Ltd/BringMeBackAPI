@@ -11,7 +11,7 @@ namespace BringMeBackAPI.Models.Comments
         public int CommentId { get; set; }
 
         public int? ReportId { get; set; }
-        public Report? Report { get; set; }
+        public BaseReport? Report { get; set; }
 
         public int UserId { get; set; }
         public string UserName { get; set; }

@@ -65,7 +65,7 @@ namespace BringMeBackAPI.Controllers
         /// <param name="report"></param>
         /// <returns></returns>
         [HttpPost("shortreport")]        
-        public async Task<IActionResult> CreateReport([FromBody] Report report)
+        public async Task<IActionResult> CreateReport([FromBody] BaseReport report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
             var createdReport = await _reportService.CreateReport(userId, report);
@@ -219,7 +219,7 @@ namespace BringMeBackAPI.Controllers
         /// <param name="report"></param>
         /// <returns></returns>
         [HttpPut("updatershortreport/{id}")]
-        public async Task<IActionResult> UpdateReport(int id, [FromBody] Report report)
+        public async Task<IActionResult> UpdateReport(int id, [FromBody] BaseReport report)
         {
             var userId = GetUserIdFromClaims(); // Extract userId from claims
             try
@@ -331,11 +331,11 @@ namespace BringMeBackAPI.Controllers
                 var result = await _reportService.ArchiveReport(userId, id);
                 if (result)
                 {
-                    return Ok(new { message = "Report and related data archived successfully." });
+                    return Ok(new { message = "BaseReport and related data archived successfully." });
                 }
                 else
                 {
-                    return NotFound(new { message = "Report not found." });
+                    return NotFound(new { message = "BaseReport not found." });
                 }
             }
             catch (UnauthorizedAccessException ex)
@@ -368,7 +368,7 @@ namespace BringMeBackAPI.Controllers
             var report = await _reportService.GetReportById(reportId);
             if (report == null)
             {
-                return NotFound("Report not found");
+                return NotFound("BaseReport not found");
             }
 
             comment.Report = report;

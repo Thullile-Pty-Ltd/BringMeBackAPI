@@ -21,6 +21,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BringMeBackAPI.Services.FileUpload;
+using BringMeBackAPI.Services.Reports.Person.Services;
+using BringMeBackAPI.Services.Reports.Person;
+using BringMeBackAPI.Services.Reports.Animal.Service;
+using BringMeBackAPI.Services.Reports.Animal;
+using BringMeBackAPI.Repository.Reports.Animal;
+using BringMeBackAPI.Repository.Reports.Animal.Repository;
+using BringMeBackAPI.Repository.Reports.Vehicle.Repository;
+using BringMeBackAPI.Repository.Reports.Vehicle;
+using BringMeBackAPI.Services.Reports.Vehicle.Service;
+using BringMeBackAPI.Services.Reports.Vehicle;
+using BringMeBackAPI.Repository.Reports.Item.Repository;
+using BringMeBackAPI.Repository.Reports.Item;
+using BringMeBackAPI.Services.Reports.Item.Service;
+using BringMeBackAPI.Services.Reports.Item;
+using BringMeBackAPI.Services.Reports.Other;
+using BringMeBackAPI.Repository.Reports.Other;
+using BringMeBackAPI.Services.Reports.Other.Service;
+using BringMeBackAPI.Repository.Reports.Other.Repository;
+using BringMeBackAPI.Repository.Reports.Person;
+using BringMeBackAPI.Repository.Reports.Person.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +84,7 @@ builder.Services.AddSwaggerGen(c =>
 // User services
 builder.Services.AddScoped<IUserService, UserService>();
 
-//Report Services
+//BaseReport Services
 builder.Services.AddScoped<IReportService, ReportService>();
 
 // Register your repository
@@ -75,6 +95,62 @@ builder.Services.AddScoped<IFoundItemReportRepository, FoundItemReportRepository
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+// Add NEW dependency injection for repositories
+builder.Services.AddScoped<IChildReportRepository, ChildReportRepository>();
+builder.Services.AddScoped<IAdultReportRepository, AdultReportRepository>();
+builder.Services.AddScoped< ISeniorCitizenReportRepository, SeniorCitizenReportRepository>();
+builder.Services.AddScoped<IWantedPersonReportRepository, WantedPersonReportRepository>();
+
+// Add NEW services for dependency injection services
+builder.Services.AddScoped<IChildReportService, ChildReportService>();
+builder.Services.AddScoped<IAdultReportService, AdultReportService>();
+builder.Services.AddScoped<ISeniorCitizenReportService, SeniorCitizenReportService>();
+builder.Services.AddScoped<IWantedPersonReportService, WantedPersonReportService>();
+
+// Add NEW dependency injection for repositories
+builder.Services.AddScoped<ILivestockReportRepository, LivestockReportRepository>();
+builder.Services.AddScoped<IPetReportRepository, PetReportRepository>();
+builder.Services.AddScoped<IWildReportRepository, WildReportRepository>();
+
+// Add NEW dependency injection for services
+builder.Services.AddScoped<ILivestockReportService, LivestockReportService>();
+builder.Services.AddScoped<IPetReportService, PetReportService>();
+builder.Services.AddScoped<IWildReportService, WildReportService>();
+
+// Add NEW dependency injection for repositories
+builder.Services.AddScoped<IBikeReportRepository, BikeReportRepository>();
+builder.Services.AddScoped<IBusReportRepository, BusReportRepository>();
+builder.Services.AddScoped<ICarReportRepository, CarReportRepository>();
+builder.Services.AddScoped<IHeavyDutyMachineryReportRepository, HeavyDutyMachineryReportRepository>();
+builder.Services.AddScoped<ITruckReportRepository, TruckReportRepository>();
+
+// Add NEW dependency injection for services
+builder.Services.AddScoped<IBikeReportService, BikeReportService>();
+builder.Services.AddScoped<IBusReportService, BusReportService>();
+builder.Services.AddScoped<ICarReportService, CarReportService>();
+builder.Services.AddScoped<IHeavyDutyMachineryReportService, HeavyDutyMachineryReportService>();
+builder.Services.AddScoped<ITruckReportService, TruckReportService>();
+
+// Add NEW dependency injection for repositories
+builder.Services.AddScoped<IClothingAndAccessoriesRepository, ClothingAndAccessoriesRepository>();
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+builder.Services.AddScoped<IHomeAndOfficeRepository, HomeAndOfficeRepository>();
+
+// Add NEW dependency injection for services
+builder.Services.AddScoped<IClothingAndAccessoriesService, ClothingAndAccessoriesService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IHomeAndOfficeService, HomeAndOfficeService>();
+
+// Add NEW dependency injection for repositories
+builder.Services.AddScoped<IAnnouncementReportRepository, AnnouncementReportRepository>();
+builder.Services.AddScoped<IDangerZoneReportRepository, DangerZoneReportRepository>();
+
+// Add NEW dependency injection for services
+builder.Services.AddScoped<IAnnouncementReportService, AnnouncementReportService>();
+builder.Services.AddScoped<IDangerZoneReportService, DangerZoneReportService>();
+
 // Register services
 builder.Services.AddScoped<IMissingPersonReportService, MissingPersonReportService>();
 builder.Services.AddScoped<IMissingItemReportService, MissingItemReportService>();
@@ -82,13 +158,9 @@ builder.Services.AddScoped<IFoundPersonReportService, FoundPersonReportService>(
 builder.Services.AddScoped<IFoundItemReportService, FoundItemReportService>();
 builder.Services.AddScoped<IReportMatchingService, ReportMatchingService>();
 
-//builder.Services.AddScoped<ICommentService, CommentService>();
-//builder.Services.AddScoped<IDonationService, DonationService>();
-//builder.Services.AddScoped<IAssociateService, AssociateService>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IOTPService, OTPService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
-
 
 // File Upload
 builder.Services.AddScoped<IFileStorageService, FileStorageService>();

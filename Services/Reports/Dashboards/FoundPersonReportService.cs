@@ -64,7 +64,7 @@ namespace BringMeBackAPI.Services.Reports.Dashboards
             var existingReport = await _foundPersonReportRepository.GetFoundPersonReportByIdAsync(id);
             if (existingReport == null)
             {
-                throw new Exception("Report not found.");
+                throw new Exception("BaseReport not found.");
             }
 
             // Ensure the logged-in user is the owner of the report

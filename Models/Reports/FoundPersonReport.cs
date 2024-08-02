@@ -2,7 +2,7 @@
 
 namespace BringMeBackAPI.Models.Reports
 {
-    public class FoundPersonReport : Report
+    public class FoundPersonReport : BaseReport
     {
         // Personal Information
         [Required(ErrorMessage = "Full name is required.")]

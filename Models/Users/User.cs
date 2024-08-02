@@ -48,7 +48,7 @@ namespace BringMeBackAPI.Models.Users
         [Required(ErrorMessage = "Role is required.")]
         public UserRole Role { get; set; }
 
-        public List<Report>? Reports { get; set; }
+        public List<BaseReport>? Reports { get; set; }
         public List<ParentComment>? Comments { get; set; }
         public List<Donation>? Donations { get; set; }
     }

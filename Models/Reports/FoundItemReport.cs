@@ -2,7 +2,7 @@
 
 namespace BringMeBackAPI.Models.Reports
 {
-    public class FoundItemReport : Report
+    public class FoundItemReport : BaseReport
     {
         // Item Information
         [Required(ErrorMessage = "Item name is required.")]
